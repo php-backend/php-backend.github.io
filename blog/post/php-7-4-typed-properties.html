@@ -1,0 +1,454 @@
+<!doctype html>
+<html lang="en">
+    
+<!-- Mirrored from phpbackend.com/blog/post/php-7-4-typed-properties by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 19 Jun 2025 04:35:29 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
+<head>
+        <base >
+        <meta charset="UTF-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+
+        <!-- meta area -->
+                <title>PHP 7.4 : Typed Properties :: PHP Backend Related discussions at PHPBackend.com</title>
+        <meta name="keywords" content="PHP 7.4 : Typed Properties, php, backend, php backend, php 7, php 8, whats new in php 8, programming, web development, software, tutorial, blog" />
+        <meta name="description" content="Scalar types &amp;amp; return types are one of the killer improvements of PHP 7 era. By defining what our functions/methods accept and return, we can write more reasonable code while" />
+        <meta name="robots" content="index, follow" />
+                <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"> 
+
+        <link rel="dns-prefetch" href="https://cdnjs.cloudflare.com/">
+        <link rel="preload" href="../../assets/icomoon/style.css" as="style" />
+
+        <!-- stylesheet -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/css/bootstrap.min.css">
+        
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.10/styles/github.min.css" />
+
+        <link rel="stylesheet" href="../../assets/icomoon/style.css">
+
+        <style>
+            /*Default*/
+            pre {
+                display: block;
+                overflow-x: auto;
+                padding: .8em;
+                color: #333;
+                background: #f8f8f8;
+                font-size: medium;
+            }
+
+            body {
+                background-color: #fefefe;
+            }
+
+            a {
+                color: #343a40;
+            }
+
+            .article .body a {
+                text-decoration: underline;
+            }
+
+            blockquote {
+                background: #f9f9f9;
+                border-left: 10px solid #ccc;
+                margin: 1.5em 10px;
+                padding: 0.5em 10px;
+                quotes: "\201C""\201D""\2018""\2019";
+            }
+            blockquote:before {
+                color: #ccc;
+                content: open-quote;
+                font-size: 4em;
+                line-height: 0.1em;
+                margin-right: 0.25em;
+                vertical-align: -0.4em;
+            }
+            blockquote:after {
+                color: #ccc;
+                content: close-quote;
+                font-size: 4em;
+                line-height: 0.1em;
+                margin-left: 0.25em;
+                vertical-align: -0.4em;
+            }
+            blockquote p {
+                display: inline;
+            }
+
+            .article {
+                margin:15px;
+                padding: 15px;
+                /*border: 1px solid #b0b0b0;*/
+                background-color: white;
+                font-size: 1.3em;
+            }
+
+            .article .title {
+                color: #343a40;
+                font-size: 1.5em;
+                font-weight: bold;
+                margin-bottom: 0.5em;
+            }
+
+            .article .title a {
+                color: #343a40;
+            }
+            .article .meta {
+                font-size: 0.7em;
+                margin-bottom: 0.3em;
+            }
+
+            .article .slurp {
+                font-size: 0.8em;
+                font-weight: normal;
+                color: #6B6B6B;
+            }
+            .article .body {
+                margin-top: 1.2em;
+            }
+            .article .body p {
+                margin-bottom: 0.7em;
+            }
+
+            footer {
+                color: white;
+                background-color: #343a40;
+                padding: 1em;
+            }
+
+            footer a, footer a:hover {
+                color: #ffffff;
+            }
+
+            .copyright {
+                text-align: center;
+            }
+
+            @media (max-width: 800px) {
+                .article {
+                    margin-left: -10px;
+                    margin-right: -10px;
+                    margin-top: 5px;
+                    margin-bottom: 5px;
+                    font-size: 1em;
+                }
+
+                .article .title {
+                    font-size: 1.3em;
+                }
+            }
+        </style>
+
+                <meta property="og:title" content="PHP 7.4 : Typed Properties :: PHP Backend Related discussions at PHPBackend.com" />
+        <meta property="og:site_name" content="PHPBackend.com" />
+        <meta property="og:description" content="Welcome to world of PHP, the most laughed at language on the internet. Here at PHPBackend, we discuss about new php versions, tips & tricks, tutorials and rants." />
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content="https://phpbackend.com/blog/post/php-7-4-typed-properties" />
+        <meta property="og:image" content="https://phpbackend.com/images/phpbackend-og.jpg" />
+        <meta property="og:image:width" content="600" />
+        <meta property="og:image:height" content="450" />
+            </head><body>
+    <div class="bg-dark" id="navbarHeader">
+        <div class="container">
+            <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+                <a class="navbar-brand" href="../../index.html">&lt;?php Backend.com</a>
+<!--                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNavDropdown">
+                    <ul class="navbar-nav ml-auto">
+                    </ul>
+                </div>-->
+            </nav>
+        </div>
+    </div><div class="container">
+    <div class="row">
+        <div class="col-sm-10">
+                            <div class="article">
+                    <div class="title">
+                        PHP 7.4 : Typed Properties                    </div>
+                    <div class="meta">
+                        <i class="icon-calendar"></i> 16, December 2019                    </div>
+                    <hr>
+                    <div class="body">
+                        <p>Scalar types &amp; return types are one of the killer improvements of PHP 7 era. By defining what our functions/methods accept and return, we can write more reasonable code while avoiding edge-cases of unexpected data type.</p><p>In PHP 7.4, type system became more powerful with "Typed Properties". As almost all the modern PHP Frameworks now follow Object Oriented Paradigm, all of them now will be able to armor themselves as "strict manner".</p><p><br></p><p><strong>What is Property Types and How to use them?</strong></p><p>consider below class</p><pre class="ql-syntax" spellcheck="false"><span class="hljs-meta">&lt;?php</span>
+<span class="hljs-keyword">declare</span>(strict_types=<span class="hljs-number">1</span>);
+
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Student</span> </span>{
+    <span class="hljs-keyword">public</span> $name;
+    <span class="hljs-keyword">public</span> $score;
+}
+</pre><p>Here we have a class "Student" With only two property. Currently none of them have any type specified. So we can create a student object like this</p><pre class="ql-syntax" spellcheck="false">$student = <span class="hljs-keyword">new</span> Student();
+$student-&gt;name = <span class="hljs-string">'John'</span>;
+$student-&gt;score = <span class="hljs-number">60</span>;
+
+var_dump($student);
+
+<span class="hljs-comment">// Output</span>
+object(Student)<span class="hljs-comment">#1 (2) { ["name"]=&gt; string(4) "John" ["score"]=&gt; int(60) }</span>
+</pre><p>All fine. But, there is a gotcha here. As we have no type defined, we can set any type of value as student score. See</p><pre class="ql-syntax" spellcheck="false">$student = <span class="hljs-keyword">new</span> Student();
+$student-&gt;name = <span class="hljs-keyword">false</span>;
+$student-&gt;score = <span class="hljs-string">'invalid value'</span>;
+
+var_dump($student);
+
+<span class="hljs-comment">// output</span>
+object(Student)<span class="hljs-comment">#1 (2) { ["name"]=&gt; bool(false) ["score"]=&gt; string(13) "invalid value" }</span>
+</pre><p><br></p><p>But my business logic requires that student name must be string and score must be integer. How can we solve this? Lets use PHP 7.4 and implement typed properties in our class "Student"</p><pre class="ql-syntax" spellcheck="false"><span class="hljs-meta">&lt;?php</span>
+<span class="hljs-keyword">declare</span>(strict_types=<span class="hljs-number">1</span>);
+
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Student</span> </span>{
+    <span class="hljs-keyword">public</span> string $name;
+    <span class="hljs-keyword">public</span> int $score;
+}
+</pre><p>here, we have defined $name as string and $score as int. Now, if we try to initiate with invalid value, PHP will throw an Exception</p><pre class="ql-syntax" spellcheck="false"> $student = <span class="hljs-keyword">new</span> Student();
+$student-&gt;name = <span class="hljs-keyword">false</span>;
+$student-&gt;score = <span class="hljs-string">'invalid value'</span>;
+
+var_dump($student);
+
+<span class="hljs-comment">// output</span>
+Fatal error: Uncaught TypeError: Typed property Student::$name must be string, bool used
+</pre><p><br></p><p><strong>How many Types can I use?</strong></p><p>Property type declarations support all type declarations supported by PHP, with the exception of <code>void</code> and <code>callable</code>. This means below types are usable</p><ul><li>string</li><li>int</li><li>float</li><li>bool</li><li>array</li><li>iterable</li><li>object</li><li>self &amp; parent</li><li>Classes &amp; interfaces</li></ul><p>Note: You can prefix "?" with type name to define the property as nullable.</p><pre class="ql-syntax" spellcheck="false"><span class="hljs-keyword">public</span> ?<span class="hljs-keyword">int</span> $number;
+</pre><p>$number property will accept both null and int as valid type.</p><p><br></p><p><strong>Type Strictness</strong></p><p>Another Great addition of PHP 7 is "Type enforcement". For a long time, PHP follows a procedure called "Duck Typing" Which lets you juggle type of a value as much as you want (Even when you don't want). Due to this behavior it was okay to pass string to a function that operates on integer (?!?)</p><p>Thanks to God, PHP is now evolving. There is a new "declare" directive (you can see it in above example) which now enforce type strictness.</p><pre class="ql-syntax" spellcheck="false"><span class="hljs-keyword">declare</span>(strict_types=<span class="hljs-number">1</span>);
+</pre><p>Just add this one line on top of your php file and PHP with yell and stop working Whenever you pass value with different type to a function/method. Off course, You need to define scalar types and return types first. I will discuss it in details soon in another blog post.</p><p>But How will it affect Typed Properties?</p><p>Without strict type, PHP always try to coerce type to desired one. Consider below situation</p><pre class="ql-syntax" spellcheck="false"><span class="hljs-meta">&lt;?php</span>
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Student</span> </span>{
+    <span class="hljs-keyword">public</span> int $score;
+}
+</pre><p>We did not declare strict type, so php will try to coerce type whenever we try to assign value to score.</p><pre class="ql-syntax" spellcheck="false">$student = <span class="hljs-keyword">new</span> Student();
+
+$student-&gt;score = <span class="hljs-number">44</span>;
+var_dump($student);
+<span class="hljs-comment">// int(44);</span>
+
+$student-&gt;score = <span class="hljs-string">"75"</span>;
+<span class="hljs-comment">// PHP will turn string "75" to int 75</span>
+var_dump($student);
+<span class="hljs-comment">// int(75);</span>
+
+$student-&gt;score = <span class="hljs-number">56.7</span>;
+<span class="hljs-comment">// PHP will turn float 56.7 to int 56</span>
+var_dump($student);
+<span class="hljs-comment">// int(56);</span>
+
+$student-&gt;score = <span class="hljs-string">"Invalid"</span>;
+<span class="hljs-comment">// Throws TypeError as PHP can't convert this string to integer</span>
+</pre><p>But when we declare strict type, PHP no longer allows invalid types</p><pre class="ql-syntax" spellcheck="false"><span class="hljs-meta">&lt;?php</span>
+<span class="hljs-keyword">declare</span>(strict_types=<span class="hljs-number">1</span>);
+
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Student</span> </span>{
+    <span class="hljs-keyword">public</span> int $score;
+}
+
+$student = <span class="hljs-keyword">new</span> Student();
+
+$student-&gt;score = <span class="hljs-number">44</span>;
+var_dump($student);
+<span class="hljs-comment">// int(44);</span>
+
+$student-&gt;score = <span class="hljs-string">"75"</span>;
+var_dump($student);
+<span class="hljs-comment">// Throws TypeError as PHP no longer tries to coerce type string to int</span>
+
+$student-&gt;score = <span class="hljs-number">56.7</span>;
+var_dump($student);
+<span class="hljs-comment">// Throws TypeError as PHP no longer tries to coerce type float to int</span>
+
+</pre><p><br></p><p><br></p><p><strong style="color: rgb(0, 0, 0); background-color: transparent;">Type Behavior for inherited properties</strong></p><p>There are only two rule for properties that has been inherited from parent class.</p><p>Non-Private Property: You can't change type of this property in child class. Property Type in child class must be same as parent class in this case.</p><pre class="ql-syntax" spellcheck="false"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">ParentClass</span> </span>{
+    <span class="hljs-keyword">public</span> string $name;
+}
+
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">ChildClass</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">ParentClass</span> </span>{
+    <span class="hljs-keyword">public</span> string $name; <span class="hljs-comment">// Allowed</span>
+}
+
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">AnotherChildClass</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">ParentClass</span> </span>{
+    <span class="hljs-keyword">public</span> int $name; <span class="hljs-comment">// Not Allowed</span>
+}
+</pre><p>Private Property: If the parent property is private, then the type may be changed arbitrarily.</p><pre class="ql-syntax" spellcheck="false"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">ParentClass</span> </span>{
+    <span class="hljs-keyword">private</span> string $name;
+}
+
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">ChildClass</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">ParentClass</span> </span>{
+    <span class="hljs-keyword">private</span> int $name; <span class="hljs-comment">// Allowed</span>
+}
+</pre><p><br></p><p><strong style="color: rgb(0, 0, 0); background-color: transparent;">Default Value for Typed Properties</strong></p><p>Previously, Whenever you define a property in class without defining a default value, PHP would assign null to that property as default value. But typed properties are different. Properties that do not have a default value are considered "<strong>uninitialized</strong>".</p><pre class="ql-syntax" spellcheck="false"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Student</span> </span>{
+    <span class="hljs-keyword">public</span> int $score; <span class="hljs-comment">// Score is in uninitialized state</span>
+}
+
+$student = <span class="hljs-keyword">new</span> Student;
+var_dump($student);
+
+<span class="hljs-comment">// object(Student)#1 (0) { ["score"]=&gt; uninitialized(int) }</span>
+</pre><p>As we can see, score is uninitialized if you don't define any default value.</p><p>Another Important behavior is, You can't access a property before initializing it first. Accessing a uninitialized property generates a <code>TypeError</code>.</p><pre class="ql-syntax" spellcheck="false"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Student</span> {</span>
+    public int $score; <span class="hljs-regexp">//</span> Score is <span class="hljs-keyword">in</span> uninitialized state
+}
+
+$student = new Student;
+
+var_dump($student-&gt;score);
+<span class="hljs-regexp">//</span> Fatal <span class="hljs-symbol">error:</span> Uncaught <span class="hljs-symbol">Error:</span> Typed property Student::$name must <span class="hljs-keyword">not</span> be accessed before initialization
+</pre><p>To be able to access/read a property, you have to either assign default value to it or assign value to it before accessing it.</p><p><br></p><p><strong>Property Reference</strong></p><p>On Strict mode, reference of a typed property will have same type enforcement of typed property.</p><pre class="ql-syntax" spellcheck="false"><span class="hljs-meta">&lt;?php</span>
+<span class="hljs-keyword">declare</span>(strict_types=<span class="hljs-number">1</span>);
+
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Student</span> </span>{
+&nbsp;&nbsp;&nbsp;<span class="hljs-keyword">public</span> string $name =<span class="hljs-string">'John'</span>;
+}
+
+$student = <span class="hljs-keyword">new</span> Student;
+$x = &amp;$student-&gt;name;
+
+$x = <span class="hljs-number">1</span>; <span class="hljs-comment">// assigning int</span>
+
+var_dump($student);
+<span class="hljs-comment">// Uncaught TypeError: Cannot assign int to reference held by property Student::$name of type string</span>
+</pre><p>On non-strict mode, PHP will try to coerce type if possible. Otherwise same TypeError will be thrown.</p><p><br></p><p><strong style="color: rgb(0, 0, 0); background-color: transparent;">Union Types</strong></p><p>Okay Typed properties are great and all, but I have to admit real world is not follow so much happy path. Production Codes are (always) consists of full of methods that returns different type of value based on bussines logic. Same method may return array if row found in DB or false if no row found. As PHP only got usable scalar type and return type couple release back, Most codes written before that tends to ignore type system whenever possible.</p><p>So, We now feel the need of being able to define multiple type on properties. And fear not sailor, Union type is on its way. Hopefully we will see it in PHP 8.</p><p><a href="https://wiki.php.net/rfc/union_types_v2" target="_blank">https://wiki.php.net/rfc/union_types_v2</a></p><p><br></p><p>Actually, There are much more to explore in Typed Properties. As all new &amp; shiny things in tech world, It will be more mature &amp; robust by time and time only. If you are starting to code new projects now, there are no reason to not to use typed properties. Take benefit of type strictness in your project. Your future-self will thank you.</p>                    </div>
+                </div>
+                            <div class="row">                    <div class="col-sm-6">
+                        <div class="article">
+                            <b>
+                                <a href="getting-started-with-php-7-4.html">Getting Started with PHP 7.4</a>
+                            </b>
+                        </div>
+                    </div>
+                                        <div class="col-sm-6">
+                        <div class="article">
+                            <b>
+                                <a href="php-7-4-arrow-functions.html">PHP 7.4 : Arrow Functions</a>
+                            </b>
+                        </div>
+                    </div>
+                    </div>
+<style>
+.comments .comment_header {
+    display: flex;
+    justify-content: space-between;
+    border-bottom: 1px solid #eee;
+    padding: 15px 0;
+    margin-bottom: 10px;
+    align-items: center;
+}
+.comments .comment_header .total {
+    color: #777777;
+    font-size: 14px;
+}
+.comments .comment_header .write_comment_btn {
+    margin: 0;
+}
+.comments .write_comment_btn, .comments .write_comment button {
+    display: inline-block;
+    background-color: #565656;
+    color: #fff;
+    text-decoration: none;
+    margin: 10px 0 0 0;
+    padding: 5px 15px;
+    border-radius: 5px;
+    font-size: 14px;
+    font-weight: 600;
+    border: 0;
+}
+.comments .write_comment_btn:hover, .comments .write_comment button:hover {
+    background-color: #636363;
+}
+.comments .write_comment {
+    padding: 20px 0 10px 0;
+}
+.comments .write_comment textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    height: 150px;
+    margin-top: 10px;
+}
+.comments .write_comment input {
+    display: block;
+    width: 250px;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    margin-top: 10px;
+}
+.comments .write_comment button {
+    cursor: pointer;
+}
+.comments .comment {
+    padding-top: 10px;
+}
+.comments .comment .name {
+    display: inline;
+    padding: 0 5px 3px 0;
+    margin: 0;
+    font-size: 16px;
+    color: #555555;
+}
+.comments .comment .date {
+    color: #888888;
+    font-size: 14px;
+}
+.comments .comment .content {
+    padding: 5px 0 5px 0;
+}
+.comments .comment .reply_comment_btn {
+    display: inline-block;
+    text-decoration: none;
+    margin-bottom: 10px;
+    font-size: 14px;
+    color: #888888;
+}
+.comments .comment .replies {
+    padding-left: 30px;
+}
+</style>
+
+<div class="comments">
+   <hr>
+    <h2>Write comment about this article:</h2>
+
+    <div class="write_comment">
+        <form>
+            <input name="website" type="text" value="http://" style="display: none;">
+	    <input name="url" type="text" value="" style="display: none;">
+
+	    <input name="name" type="text" placeholder="Your Name" required>
+            <textarea name="content" placeholder="Write your comment here..." required></textarea>
+            <button type="submit">Submit Comment</button>
+        </form>
+    </div>
+
+</div>
+
+<script>
+
+document.querySelector("input[name='url']").value = window.location.href;
+
+const comments_page_id = 1; // This number should be unique on every page
+
+document.querySelectorAll(".comments .write_comment form").forEach(element => {
+		element.onsubmit = event => {
+			event.preventDefault();
+			fetch("../../post-comment.html", {
+				method: 'POST',
+				body: new FormData(element)
+			}).then(response => response.text()).then(data => {
+				element.parentElement.innerHTML = data;
+			});
+		};
+	});
+</script>
+
+        </div>
+    </div>
+</div>
+<footer>
+    <div class="" style="text-align: center; margin-bottom: 10px;">
+        <a href="../../rss.xml">Rss Feed</a>
+    </div>
+    <div class="copyright">
+        <a href="../../index.html">&lt;?php Backend.com</a>
+    </div>
+</footer>    </body>
+
+<!-- Mirrored from phpbackend.com/blog/post/php-7-4-typed-properties by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 19 Jun 2025 04:35:29 GMT -->
+</html>

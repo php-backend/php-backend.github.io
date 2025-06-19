@@ -1,0 +1,345 @@
+<!doctype html>
+<html lang="en">
+    
+<!-- Mirrored from phpbackend.com/blog/post/php-8-0-union-types by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 19 Jun 2025 04:35:29 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
+<head>
+        <base >
+        <meta charset="UTF-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+
+        <!-- meta area -->
+                <title>PHP 8.0 : Union Types :: PHP Backend Related discussions at PHPBackend.com</title>
+        <meta name="keywords" content="PHP 8.0 : Union Types, php, backend, php backend, php 7, php 8, whats new in php 8, programming, web development, software, tutorial, blog" />
+        <meta name="description" content="PHP is improving it&apos;s type system in every release. Type safety is a great approach to increase data integrity and reduce bugs overall in software. A combination of declare(strict_types=1);&amp;nbsp;and static" />
+        <meta name="robots" content="index, follow" />
+                <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"> 
+
+        <link rel="dns-prefetch" href="https://cdnjs.cloudflare.com/">
+        <link rel="preload" href="../../assets/icomoon/style.css" as="style" />
+
+        <!-- stylesheet -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/css/bootstrap.min.css">
+        
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.10/styles/github.min.css" />
+
+        <link rel="stylesheet" href="../../assets/icomoon/style.css">
+
+        <style>
+            /*Default*/
+            pre {
+                display: block;
+                overflow-x: auto;
+                padding: .8em;
+                color: #333;
+                background: #f8f8f8;
+                font-size: medium;
+            }
+
+            body {
+                background-color: #fefefe;
+            }
+
+            a {
+                color: #343a40;
+            }
+
+            .article .body a {
+                text-decoration: underline;
+            }
+
+            blockquote {
+                background: #f9f9f9;
+                border-left: 10px solid #ccc;
+                margin: 1.5em 10px;
+                padding: 0.5em 10px;
+                quotes: "\201C""\201D""\2018""\2019";
+            }
+            blockquote:before {
+                color: #ccc;
+                content: open-quote;
+                font-size: 4em;
+                line-height: 0.1em;
+                margin-right: 0.25em;
+                vertical-align: -0.4em;
+            }
+            blockquote:after {
+                color: #ccc;
+                content: close-quote;
+                font-size: 4em;
+                line-height: 0.1em;
+                margin-left: 0.25em;
+                vertical-align: -0.4em;
+            }
+            blockquote p {
+                display: inline;
+            }
+
+            .article {
+                margin:15px;
+                padding: 15px;
+                /*border: 1px solid #b0b0b0;*/
+                background-color: white;
+                font-size: 1.3em;
+            }
+
+            .article .title {
+                color: #343a40;
+                font-size: 1.5em;
+                font-weight: bold;
+                margin-bottom: 0.5em;
+            }
+
+            .article .title a {
+                color: #343a40;
+            }
+            .article .meta {
+                font-size: 0.7em;
+                margin-bottom: 0.3em;
+            }
+
+            .article .slurp {
+                font-size: 0.8em;
+                font-weight: normal;
+                color: #6B6B6B;
+            }
+            .article .body {
+                margin-top: 1.2em;
+            }
+            .article .body p {
+                margin-bottom: 0.7em;
+            }
+
+            footer {
+                color: white;
+                background-color: #343a40;
+                padding: 1em;
+            }
+
+            footer a, footer a:hover {
+                color: #ffffff;
+            }
+
+            .copyright {
+                text-align: center;
+            }
+
+            @media (max-width: 800px) {
+                .article {
+                    margin-left: -10px;
+                    margin-right: -10px;
+                    margin-top: 5px;
+                    margin-bottom: 5px;
+                    font-size: 1em;
+                }
+
+                .article .title {
+                    font-size: 1.3em;
+                }
+            }
+        </style>
+
+                <meta property="og:title" content="PHP 8.0 : Union Types :: PHP Backend Related discussions at PHPBackend.com" />
+        <meta property="og:site_name" content="PHPBackend.com" />
+        <meta property="og:description" content="Welcome to world of PHP, the most laughed at language on the internet. Here at PHPBackend, we discuss about new php versions, tips & tricks, tutorials and rants." />
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content="https://phpbackend.com/blog/post/php-8-0-union-types" />
+        <meta property="og:image" content="https://phpbackend.com/images/phpbackend-og.jpg" />
+        <meta property="og:image:width" content="600" />
+        <meta property="og:image:height" content="450" />
+            </head><body>
+    <div class="bg-dark" id="navbarHeader">
+        <div class="container">
+            <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+                <a class="navbar-brand" href="../../index.html">&lt;?php Backend.com</a>
+<!--                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNavDropdown">
+                    <ul class="navbar-nav ml-auto">
+                    </ul>
+                </div>-->
+            </nav>
+        </div>
+    </div><div class="container">
+    <div class="row">
+        <div class="col-sm-10">
+                            <div class="article">
+                    <div class="title">
+                        PHP 8.0 : Union Types                    </div>
+                    <div class="meta">
+                        <i class="icon-calendar"></i> 18, April 2021                    </div>
+                    <hr>
+                    <div class="body">
+                        <p>PHP is improving it's type system in every release. Type safety is a great approach to increase data integrity and reduce bugs overall in software. A combination of <span style="color: rgb(240, 102, 102);">declare(strict_types=1);</span>&nbsp;and static analyzer like <span style="color: rgb(240, 102, 102);">psalm</span> can really help us to improve our code quality. On PHP 7.4, we got things like <a href="https://ataur.net/blog/post/php-7-4-typed-properties" target="_blank">Property Types</a> &amp; <a href="https://ataur.net/blog/post/php-7-4-covariant-returns-and-contravariant-parameters" target="_blank">Contra/Co variant</a> type support that helped us to define a specific type to property/parameter.</p><p>PHP 8.0 now enables us to define multiple type to a single property/parameter/return, which is called "Union Type".</p><p><br></p><p><strong>Union Types</strong></p><p>Currently we declare type this way:</p><pre class="ql-syntax" spellcheck="false"><span class="hljs-meta">&lt;?php</span>
+﻿
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Foo</span>
+</span>{
+&nbsp;&nbsp;&nbsp;<span class="hljs-keyword">public</span> string $bar;
+
+&nbsp;&nbsp;&nbsp;<span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">baz</span><span class="hljs-params">(int $user)</span>: <span class="hljs-title">string</span>
+&nbsp;&nbsp;&nbsp;</span>{
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="hljs-comment">// something</span>
+&nbsp;&nbsp;&nbsp;}
+}
+</pre><p>Here, we can only define a single type to $bar or $user or return type.</p><p>Actually, we already have two special union types:</p><ul><li><strong>Nullable type</strong>: we can define any type with nullable operator to accept null too. So, <span style="color: rgb(240, 102, 102);">?string</span> is same as <span style="color: rgb(240, 102, 102);">string|null</span></li><li><strong>Iterable type</strong>: this type is actually accepts both array &amp; traversable type, so same as <span style="color: rgb(240, 102, 102);">array|traversable</span></li></ul><p>But, now we can declare multiple types more practically. Multiple types are divided by pipe ( <strong style="color: rgb(240, 102, 102);">|</strong> ) sign.</p><pre class="ql-syntax" spellcheck="false"><span class="hljs-meta">&lt;?php</span>
+﻿
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Foo</span>
+</span>{
+&nbsp;&nbsp;&nbsp;<span class="hljs-keyword">public</span> string|User $bar;
+
+&nbsp;&nbsp;&nbsp;<span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">baz</span><span class="hljs-params">(int|User|Profile $user)</span>: <span class="hljs-title">string</span>|<span class="hljs-title">bool</span>
+&nbsp;&nbsp;&nbsp;</span>{
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="hljs-comment">// something</span>
+&nbsp;&nbsp;&nbsp;}
+}
+</pre><p>as we can see, <span style="color: rgb(240, 102, 102);">$bar</span> can now contain either string or instance of User object. <span style="color: rgb(240, 102, 102);">baz()</span> now accept int or User or Profile object as $user parameter. It can also return either string value or boolean.</p><p>All the type definition will be checked during runtime, so PHP will throw error if we try to pass/return a invalid type.</p><p><strong>Note</strong>: <span style="color: rgb(240, 102, 102);">false</span> is a new specially defined psudo-type. As the the name suggests, it can only represent false value. Some of the PHP internal functions return false as negative value (eg. not found), that's why false has been enabled to add to union type. <span style="color: rgb(240, 102, 102);">true</span> however, is not a valid type. use <span style="color: rgb(240, 102, 102);">bool</span> instead.</p><p><br></p><p>A new class has been defined for reflection purpose. <a href="https://www.php.net/manual/en/class.reflectiontype.php" target="_blank">ReflectionUnionType</a> is used to get type information of union types.</p><p><br></p><p><strong>Restriction regarding union types</strong></p><ul><li><span style="color: rgb(240, 102, 102);">void</span> type can never be part of union types.</li><li><span style="color: rgb(240, 102, 102);">nullable</span> types are not allowed to be part of union types. use <span style="color: rgb(240, 102, 102);">|null</span> instead.</li><li><span style="color: rgb(240, 102, 102);">false</span> can't be used if <span style="color: rgb(240, 102, 102);">bool</span> is used in same place.</li><li>If <span style="color: rgb(240, 102, 102);">object</span> type is used, class types can't be used in same place.</li><li>if <span style="color: rgb(240, 102, 102);">iterable</span> type is used, array &amp; Traversable types can't be used in same place.</li><li>duplicate types in union type will throw error.</li></ul><p><strong>Inheritance related restrictions:</strong></p><ul><li>Property types are invariant. So type must be subtype and supertype.</li><li>Parameter types are contravariant. We can only add wider type as union type. So super type is allowed.</li><li>Return types are covariant. We can only narrow down union types by sub type during inheritance.</li></ul><p><br></p><p>After using union types, I am now looking forward to intersection type and type alias feature in PHP. Let's keep our finger crossed and hope we'll get them in near future. Till then, keep your code type safe.</p>                    </div>
+                </div>
+                            <div class="row">                    <div class="col-sm-6">
+                        <div class="article">
+                            <b>
+                                <a href="php-8-0-named-parameters.html">PHP 8.0 : Named Parameters</a>
+                            </b>
+                        </div>
+                    </div>
+                                        <div class="col-sm-6">
+                        <div class="article">
+                            <b>
+                                <a href="php-8-1-never-return-type.html">PHP 8.1 : `never` return type</a>
+                            </b>
+                        </div>
+                    </div>
+                    </div>
+<style>
+.comments .comment_header {
+    display: flex;
+    justify-content: space-between;
+    border-bottom: 1px solid #eee;
+    padding: 15px 0;
+    margin-bottom: 10px;
+    align-items: center;
+}
+.comments .comment_header .total {
+    color: #777777;
+    font-size: 14px;
+}
+.comments .comment_header .write_comment_btn {
+    margin: 0;
+}
+.comments .write_comment_btn, .comments .write_comment button {
+    display: inline-block;
+    background-color: #565656;
+    color: #fff;
+    text-decoration: none;
+    margin: 10px 0 0 0;
+    padding: 5px 15px;
+    border-radius: 5px;
+    font-size: 14px;
+    font-weight: 600;
+    border: 0;
+}
+.comments .write_comment_btn:hover, .comments .write_comment button:hover {
+    background-color: #636363;
+}
+.comments .write_comment {
+    padding: 20px 0 10px 0;
+}
+.comments .write_comment textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    height: 150px;
+    margin-top: 10px;
+}
+.comments .write_comment input {
+    display: block;
+    width: 250px;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    margin-top: 10px;
+}
+.comments .write_comment button {
+    cursor: pointer;
+}
+.comments .comment {
+    padding-top: 10px;
+}
+.comments .comment .name {
+    display: inline;
+    padding: 0 5px 3px 0;
+    margin: 0;
+    font-size: 16px;
+    color: #555555;
+}
+.comments .comment .date {
+    color: #888888;
+    font-size: 14px;
+}
+.comments .comment .content {
+    padding: 5px 0 5px 0;
+}
+.comments .comment .reply_comment_btn {
+    display: inline-block;
+    text-decoration: none;
+    margin-bottom: 10px;
+    font-size: 14px;
+    color: #888888;
+}
+.comments .comment .replies {
+    padding-left: 30px;
+}
+</style>
+
+<div class="comments">
+   <hr>
+    <h2>Write comment about this article:</h2>
+
+    <div class="write_comment">
+        <form>
+            <input name="website" type="text" value="http://" style="display: none;">
+	    <input name="url" type="text" value="" style="display: none;">
+
+	    <input name="name" type="text" placeholder="Your Name" required>
+            <textarea name="content" placeholder="Write your comment here..." required></textarea>
+            <button type="submit">Submit Comment</button>
+        </form>
+    </div>
+
+</div>
+
+<script>
+
+document.querySelector("input[name='url']").value = window.location.href;
+
+const comments_page_id = 1; // This number should be unique on every page
+
+document.querySelectorAll(".comments .write_comment form").forEach(element => {
+		element.onsubmit = event => {
+			event.preventDefault();
+			fetch("../../post-comment.html", {
+				method: 'POST',
+				body: new FormData(element)
+			}).then(response => response.text()).then(data => {
+				element.parentElement.innerHTML = data;
+			});
+		};
+	});
+</script>
+
+        </div>
+    </div>
+</div>
+<footer>
+    <div class="" style="text-align: center; margin-bottom: 10px;">
+        <a href="../../rss.xml">Rss Feed</a>
+    </div>
+    <div class="copyright">
+        <a href="../../index.html">&lt;?php Backend.com</a>
+    </div>
+</footer>    </body>
+
+<!-- Mirrored from phpbackend.com/blog/post/php-8-0-union-types by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 19 Jun 2025 04:35:29 GMT -->
+</html>

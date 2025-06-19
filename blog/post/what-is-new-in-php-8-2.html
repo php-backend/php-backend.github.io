@@ -1,0 +1,442 @@
+<!doctype html>
+<html lang="en">
+    
+<!-- Mirrored from phpbackend.com/blog/post/what-is-new-in-php-8-2 by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 19 Jun 2025 04:34:51 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
+<head>
+        <base >
+        <meta charset="UTF-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+
+        <!-- meta area -->
+                <title>What is new in PHP 8.2 :: PHP Backend Related discussions at PHPBackend.com</title>
+        <meta name="keywords" content="What is new in PHP 8.2, php, backend, php backend, php 7, php 8, whats new in php 8, programming, web development, software, tutorial, blog" />
+        <meta name="description" content="While not as exciting as previous release, PHP 8.2 brings some nice addition to the language. Let&apos;s have a look at them: true, false, null are standalone type now While," />
+        <meta name="robots" content="index, follow" />
+                <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"> 
+
+        <link rel="dns-prefetch" href="https://cdnjs.cloudflare.com/">
+        <link rel="preload" href="../../assets/icomoon/style.css" as="style" />
+
+        <!-- stylesheet -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/css/bootstrap.min.css">
+        
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.10/styles/github.min.css" />
+
+        <link rel="stylesheet" href="../../assets/icomoon/style.css">
+
+        <style>
+            /*Default*/
+            pre {
+                display: block;
+                overflow-x: auto;
+                padding: .8em;
+                color: #333;
+                background: #f8f8f8;
+                font-size: medium;
+            }
+
+            body {
+                background-color: #fefefe;
+            }
+
+            a {
+                color: #343a40;
+            }
+
+            .article .body a {
+                text-decoration: underline;
+            }
+
+            blockquote {
+                background: #f9f9f9;
+                border-left: 10px solid #ccc;
+                margin: 1.5em 10px;
+                padding: 0.5em 10px;
+                quotes: "\201C""\201D""\2018""\2019";
+            }
+            blockquote:before {
+                color: #ccc;
+                content: open-quote;
+                font-size: 4em;
+                line-height: 0.1em;
+                margin-right: 0.25em;
+                vertical-align: -0.4em;
+            }
+            blockquote:after {
+                color: #ccc;
+                content: close-quote;
+                font-size: 4em;
+                line-height: 0.1em;
+                margin-left: 0.25em;
+                vertical-align: -0.4em;
+            }
+            blockquote p {
+                display: inline;
+            }
+
+            .article {
+                margin:15px;
+                padding: 15px;
+                /*border: 1px solid #b0b0b0;*/
+                background-color: white;
+                font-size: 1.3em;
+            }
+
+            .article .title {
+                color: #343a40;
+                font-size: 1.5em;
+                font-weight: bold;
+                margin-bottom: 0.5em;
+            }
+
+            .article .title a {
+                color: #343a40;
+            }
+            .article .meta {
+                font-size: 0.7em;
+                margin-bottom: 0.3em;
+            }
+
+            .article .slurp {
+                font-size: 0.8em;
+                font-weight: normal;
+                color: #6B6B6B;
+            }
+            .article .body {
+                margin-top: 1.2em;
+            }
+            .article .body p {
+                margin-bottom: 0.7em;
+            }
+
+            footer {
+                color: white;
+                background-color: #343a40;
+                padding: 1em;
+            }
+
+            footer a, footer a:hover {
+                color: #ffffff;
+            }
+
+            .copyright {
+                text-align: center;
+            }
+
+            @media (max-width: 800px) {
+                .article {
+                    margin-left: -10px;
+                    margin-right: -10px;
+                    margin-top: 5px;
+                    margin-bottom: 5px;
+                    font-size: 1em;
+                }
+
+                .article .title {
+                    font-size: 1.3em;
+                }
+            }
+        </style>
+
+                <meta property="og:title" content="What is new in PHP 8.2 :: PHP Backend Related discussions at PHPBackend.com" />
+        <meta property="og:site_name" content="PHPBackend.com" />
+        <meta property="og:description" content="Welcome to world of PHP, the most laughed at language on the internet. Here at PHPBackend, we discuss about new php versions, tips & tricks, tutorials and rants." />
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content="https://phpbackend.com/blog/post/what-is-new-in-php-8-2" />
+        <meta property="og:image" content="https://phpbackend.com/images/phpbackend-og.jpg" />
+        <meta property="og:image:width" content="600" />
+        <meta property="og:image:height" content="450" />
+            </head><body>
+    <div class="bg-dark" id="navbarHeader">
+        <div class="container">
+            <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+                <a class="navbar-brand" href="../../index.html">&lt;?php Backend.com</a>
+<!--                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNavDropdown">
+                    <ul class="navbar-nav ml-auto">
+                    </ul>
+                </div>-->
+            </nav>
+        </div>
+    </div><div class="container">
+    <div class="row">
+        <div class="col-sm-10">
+                            <div class="article">
+                    <div class="title">
+                        What is new in PHP 8.2                    </div>
+                    <div class="meta">
+                        <i class="icon-calendar"></i> 06, October 2023                    </div>
+                    <hr>
+                    <div class="body">
+                        <p>While not as exciting as previous release, PHP 8.2 brings some nice addition to the language. Let's have a look at them:</p><p><br></p><p><strong>true, false, null are standalone type now</strong></p><p>While, we could use null and false with with other types as union type, from now on they can be used separately as well.</p><p>example:</p><pre class="ql-syntax" spellcheck="false"><span class="hljs-comment">#On PHP 8.1</span>
+﻿
+<span class="hljs-comment">//  union type, allowed</span>
+﻿<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">bazz</span><span class="hljs-params">()</span>: <span class="hljs-title">array</span>|<span class="hljs-title">null</span>
+</span>{
+  <span class="hljs-keyword">return</span> <span class="hljs-keyword">null</span>;
+}
+
+<span class="hljs-comment">//  union type, allowed</span>
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">bazz</span><span class="hljs-params">()</span>: <span class="hljs-title">string</span>|<span class="hljs-title">false</span>
+</span>{
+  <span class="hljs-keyword">return</span> <span class="hljs-keyword">false</span>; 
+}
+
+<span class="hljs-comment">//  null as standalone type, not allowed</span>
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">bazz</span><span class="hljs-params">()</span>: <span class="hljs-title">null</span>
+</span>{
+  <span class="hljs-keyword">return</span> <span class="hljs-keyword">null</span>;
+}
+
+<span class="hljs-comment">//  false as standalone type, not allowed</span>
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">bazz</span><span class="hljs-params">()</span>: <span class="hljs-title">false</span>
+</span>{
+  <span class="hljs-keyword">return</span> <span class="hljs-keyword">false</span>;
+}
+</pre><p>Two of the above function will trigger a error "Fatal error: Null/False can not be used as a standalone type". But with PHP 8.2, they works fine, including true:</p><pre class="ql-syntax" spellcheck="false"><span class="hljs-comment">#On PHP 8.2</span>
+﻿
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">bazz</span><span class="hljs-params">()</span>: <span class="hljs-title">null</span>
+</span>{
+  <span class="hljs-keyword">return</span> <span class="hljs-keyword">null</span>;
+}
+
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">bazz</span><span class="hljs-params">()</span>: <span class="hljs-title">false</span>
+</span>{
+  <span class="hljs-keyword">return</span> <span class="hljs-keyword">false</span>;
+}
+
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">bazz</span><span class="hljs-params">()</span>: <span class="hljs-title">true</span>
+</span>{
+  <span class="hljs-keyword">return</span> <span class="hljs-keyword">true</span>;
+}
+</pre><p><strong>But why do they have been added?</strong></p><ul><li>Some of the internal php functions return null/false in case of error/failure scenario.</li><li>Some other php functions now always return true. In case of error/failure, they throw exceptions. So true as a type covers this scenario.</li></ul><p><strong>Note</strong>: <strong style="color: rgb(240, 102, 102);">true|false</strong> union type is not allowed. <strong style="color: rgb(240, 102, 102);">bool</strong> type is recommended for such use-case.</p><p><br></p><p><br></p><p><strong>New execute_query function for mysql</strong></p><p>To avoid SQL injection, prepared statement is always recommended for mysql query. But code for preparing SQL statements is quite verbose. We need to call three different function to execute a query and fetch the result.</p><pre class="ql-syntax" spellcheck="false"><span class="hljs-meta">&lt;?php</span>
+$statment = $mysql-&gt;prepare(<span class="hljs-string">"SELECT * FROM users WHERE id = ?"</span>);
+$statement-&gt;execute([$id]);
+
+<span class="hljs-keyword">foreach</span>($statement-&gt;get_result() <span class="hljs-keyword">as</span> $row) {
+  var_dump($row);
+}
+</pre><p>But, with PHP 8.2 we can now reduce all these three function call to a single execute_query() call:</p><pre class="ql-syntax" spellcheck="false"><span class="hljs-keyword">foreach</span>($mysql-&gt;execute_query(<span class="hljs-string">"SELECT * FROM users WHERE id = ?"</span>, [$id]) <span class="hljs-keyword">as</span> $row) {
+  var_dump($row);
+}
+</pre><p>Isn't that sweet? :)</p><p><br></p><p><strong>readonly classes</strong></p><p>On PHP 8.1, we got this awesome feature to flag class properties as "readonly" so they can be written only once in the construct. People like me really liked this feature, and used a lot in our codebase, specially for DTOs. But When we want all properties of DTOs to be readonly, it's kinda boring and pain to define each properties as readonly.</p><p>Fear not, PHP 8.2 now allows us to define whole class as "readonly". readonly classes automatically marks all of its properties as readonly. Also, dynamic properties are not allowed.</p><pre class="ql-syntax" spellcheck="false">readonly <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Foo</span>
+</span>{
+&nbsp;&nbsp;&nbsp; <span class="hljs-keyword">public</span> int $bar;
+&nbsp;
+&nbsp;&nbsp;&nbsp; <span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">__construct</span><span class="hljs-params">()</span> </span>{
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span class="hljs-keyword">$this</span>-&gt;bar = <span class="hljs-number">1</span>;
+&nbsp;&nbsp;&nbsp; }
+}
+&nbsp;
+$foo = <span class="hljs-keyword">new</span> Foo();
+$foo-&gt;bar = <span class="hljs-number">2</span>;
+<span class="hljs-comment">// Fatal Error: Uncaught Error: Cannot modify readonly property Foo::$bar</span>
+&nbsp;
+$foo-&gt;baz = <span class="hljs-number">1</span>;
+<span class="hljs-comment">// Fatal Error: Uncaught Error: Cannot create dynamic property Foo::$baz</span>
+</pre><p><strong>Note:</strong></p><ul><li>all properties of readonly class must be typed</li><li>a readonly class can be extended by another readonly class only</li></ul><p><br></p><p><strong>dynamic class properties are now deprecated</strong></p><p>Uhh, dynamic class properties, what a feature. I wasted so many hours of my life because of this feature. While I abused this feature a lot too, but the fact that a single typo can cause debug nightmare is unacceptable to me. I'm sure you've faced such situation too:</p><pre class="ql-syntax" spellcheck="false"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">User</span>
+</span>{
+  <span class="hljs-keyword">public</span> $name;
+
+  <span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">__construct</span><span class="hljs-params">(string $name)</span></span>{
+     <span class="hljs-keyword">$this</span>-&gt;name = $name;
+  }
+}
+
+$user = <span class="hljs-keyword">new</span> User(<span class="hljs-string">'John'</span>);
+
+<span class="hljs-comment">// some code</span>
+﻿
+$user-&gt;nane = <span class="hljs-string">'Doe'</span>; <span class="hljs-comment">// notice anything?</span>
+﻿
+<span class="hljs-comment">// some other code</span>
+
+<span class="hljs-keyword">echo</span> $user-&gt;name;
+<span class="hljs-comment">// umm, why it prints John?﻿</span>
+</pre><p>I know, modern IDE helps to prevent such scenario but there are lot of cases where dynamic properties bring more risks that the benefits.</p><p><span class="hljs-number">PHP 8</span>.<span class="hljs-number">2</span> prevent this behavior. Accessing a non-existent property on a object no longer silently creates the property. Instead it throws "Deprecated: Creation of dynamic property User::$nane is deprecated" error.</p><p>BTW, if your code uses __get/__set magic method to achieve similar effect, then you don't have to worry, these methods are not affected by this change.</p><p><strong>But, I still need dynamic properties in my codebase</strong></p><p>In that case you have two option:</p><ul><li>Add #[AllowDynamicProperties] attribute to the class, This will enable dynamic properties feature only for that class</li><li>Or use \stdClass object. Dynamic properties are allowed for this object.</li></ul><p><br></p><p><br></p><p><strong>deprecated utf8_encode and utf8_decode</strong></p><p>Due to some limitations specified in the <a href="https://wiki.php.net/rfc/remove_utf8_decode_and_utf8_encode" target="_blank">RFC</a>, using utf8_encode and utf8_decode functions will throw deprecation warning. Also, they will be removed on PHP 9.</p><p>Instead, <code>mb_convert_encoding </code>is recommended.</p><p><br></p><p><strong>iterator function now accept arrays</strong></p><p>functions such as&nbsp;iterator_to_array() and iterator_count() currently only accepts iterator as input. PHP 8.2 makes it easier by allowing us to pass regular arrays to them as well.</p><p><br></p><p><strong>Hiding parameters in back traces</strong></p><p>PHP exception stack traces are awesome. They really help a lot during debugging an error. For each trace, they contains original parameters so we can inspect it and find potential bug. But it has a drawback. Sometimes we pass sensitive information (such as password or secret keys) to functions are parameter. And these information gets written to log whenever a exception happens. Sensitive information should not be exposed like that.</p><p>To overcome this drawback, PHP 8.2 introduces new attribute called #[\SensitiveParameter]</p><p>With this, we simply add this attribute to any parameter that we think is sensitive, and inside trace log, they will be replaced by SensitiveParameterValue object.</p><pre class="ql-syntax" spellcheck="false"><span class="hljs-comment">// we don't want $password to be in stack trace</span>
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">db_connect</span>
+<span class="hljs-params">(
+  string $host,
+  #[\SensitiveParameter]
+﻿  string $password
+)</span>
+</span>{
+  <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-keyword">Exception</span>(<span class="hljs-string">"DB connection failed"</span>);
+}﻿
+
+db_connect(<span class="hljs-string">'localhost'</span>, <span class="hljs-string">'password'</span>);
+
+
+<span class="hljs-comment">/*
+Fatal error: Uncaught Exception: DB connection failed in file.php:9
+Stack trace:
+#0 file.php(12): db_connect('localhost', Object(SensitiveParameterValue))
+#1 {main}
+&nbsp; thrown in file.php on line 9
+*/</span>
+</pre><p><br></p><p><strong>New random extension</strong></p><p>A new extension named <a href="https://www.php.net/manual/en/book.random.php" target="_blank">random</a> has been introduced. It provides a OOP interface to generate random integers. Due to its design, it is much easier to mock for testing purpose.</p><p><br></p><p><strong>Constants in traits</strong></p><p>Although I don't like this, but PHP 8.2 now supports declaring constants in traits.</p><pre class="ql-syntax" spellcheck="false"><span class="hljs-keyword">trait</span> Bar
+{
+  <span class="hljs-keyword">const</span> SOMETHING = <span class="hljs-number">1</span>;
+}
+
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Foo</span>
+</span>{
+  <span class="hljs-keyword">use</span> <span class="hljs-title">Bar</span>;
+}﻿
+
+<span class="hljs-keyword">echo</span> Foo::SOMETHING; <span class="hljs-comment">//allowed</span>
+
+<span class="hljs-keyword">echo</span> Bar::SOMETHING; <span class="hljs-comment">// direct access via trait is not allowed</span>
+</pre><p><br></p><p><strong>ini_parse_quantity function</strong></p><p>In php.ini, there are some values that represents byte data size in various unit, such as 512K, 64M, 1G</p><p><a href="https://www.php.net/manual/en/function.ini-parse-quantity.php" target="_blank"><strong>ini_parse_quantity()</strong></a> function can parse these values and return bytes in integer.</p><pre class="ql-syntax" spellcheck="false">ini_parse_quantity(<span class="hljs-string">'64K'</span>); <span class="hljs-comment">// 65536</span>
+</pre><p><br></p><p><strong>curl_upkeep function</strong></p><p>Curl extension has brought us a new function to keep a curl connection alive. <a href="https://www.php.net/manual/en/function.curl_upkeep.php" target="_blank">curl_upkeep()</a> does this by sending small amount of traffic to the existing connection. Currently it only supports HTTP/2 connections.</p><p><br></p><p><strong>imap_is_open</strong></p><p>This new function <a href="https://www.php.net/manual/en/function.imap-is-open.php" target="_blank">imap_is_open()</a> checks if a imap connection is still open or not. It accepts IMAP\Connection object and return bool.</p><p><br></p><p><strong>str_split now return empty array on empty string</strong></p><p>Before 8.2, <a href="https://www.php.net/manual/en/function.str-split.php" target="_blank">str_split()</a> used to return array of a single empty string if an empty string was provided as input. PHP 8.2 changes this behavior, it now return empty array</p><pre class="ql-syntax" spellcheck="false"><span class="hljs-comment">// php 8.1</span>
+str_split(<span class="hljs-string">""</span>); <span class="hljs-comment">// returns [""]</span>
+
+<span class="hljs-comment">//php 8.2</span>
+str_split(<span class="hljs-string">""</span>); <span class="hljs-comment">// returns []</span>
+</pre><p><br></p><p><strong>memory_reset_peak_usage</strong></p><p>If you need to reset memory usage data returned by memory_get_peak_usage(). <a href="https://www.php.net/manual/en/function.memory-reset-peak-usage.php" target="_blank">memory_reset_peak_usage()</a> can do that.</p><p><br></p><p><strong>openssl_cipher_key_length</strong></p><p>This new <a href="https://www.php.net/manual/en/function.openssl-cipher-key-length.php" target="_blank">openssl_cipher_key_length()</a> function returns key length of the provided cipher algo:</p><pre class="ql-syntax" spellcheck="false">openssl_cipher_key_length(<span class="hljs-string">'AES-128-CBC'</span>); <span class="hljs-comment">// 16</span>
+</pre><p><br></p><p><br></p><p>Which of these features did you like the most? Let me know by commenting bellow.</p>                    </div>
+                </div>
+                            <div class="row">                    <div class="col-sm-6">
+                        <div class="article">
+                            <b>
+                                <a href="php-8-1-first-class-callable-support.html">PHP 8.1 : First Class Callable support</a>
+                            </b>
+                        </div>
+                    </div>
+                    </div>
+<style>
+.comments .comment_header {
+    display: flex;
+    justify-content: space-between;
+    border-bottom: 1px solid #eee;
+    padding: 15px 0;
+    margin-bottom: 10px;
+    align-items: center;
+}
+.comments .comment_header .total {
+    color: #777777;
+    font-size: 14px;
+}
+.comments .comment_header .write_comment_btn {
+    margin: 0;
+}
+.comments .write_comment_btn, .comments .write_comment button {
+    display: inline-block;
+    background-color: #565656;
+    color: #fff;
+    text-decoration: none;
+    margin: 10px 0 0 0;
+    padding: 5px 15px;
+    border-radius: 5px;
+    font-size: 14px;
+    font-weight: 600;
+    border: 0;
+}
+.comments .write_comment_btn:hover, .comments .write_comment button:hover {
+    background-color: #636363;
+}
+.comments .write_comment {
+    padding: 20px 0 10px 0;
+}
+.comments .write_comment textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    height: 150px;
+    margin-top: 10px;
+}
+.comments .write_comment input {
+    display: block;
+    width: 250px;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    margin-top: 10px;
+}
+.comments .write_comment button {
+    cursor: pointer;
+}
+.comments .comment {
+    padding-top: 10px;
+}
+.comments .comment .name {
+    display: inline;
+    padding: 0 5px 3px 0;
+    margin: 0;
+    font-size: 16px;
+    color: #555555;
+}
+.comments .comment .date {
+    color: #888888;
+    font-size: 14px;
+}
+.comments .comment .content {
+    padding: 5px 0 5px 0;
+}
+.comments .comment .reply_comment_btn {
+    display: inline-block;
+    text-decoration: none;
+    margin-bottom: 10px;
+    font-size: 14px;
+    color: #888888;
+}
+.comments .comment .replies {
+    padding-left: 30px;
+}
+</style>
+
+<div class="comments">
+   <hr>
+    <h2>Write comment about this article:</h2>
+
+    <div class="write_comment">
+        <form>
+            <input name="website" type="text" value="http://" style="display: none;">
+	    <input name="url" type="text" value="" style="display: none;">
+
+	    <input name="name" type="text" placeholder="Your Name" required>
+            <textarea name="content" placeholder="Write your comment here..." required></textarea>
+            <button type="submit">Submit Comment</button>
+        </form>
+    </div>
+
+</div>
+
+<script>
+
+document.querySelector("input[name='url']").value = window.location.href;
+
+const comments_page_id = 1; // This number should be unique on every page
+
+document.querySelectorAll(".comments .write_comment form").forEach(element => {
+		element.onsubmit = event => {
+			event.preventDefault();
+			fetch("../../post-comment.html", {
+				method: 'POST',
+				body: new FormData(element)
+			}).then(response => response.text()).then(data => {
+				element.parentElement.innerHTML = data;
+			});
+		};
+	});
+</script>
+
+        </div>
+    </div>
+</div>
+<footer>
+    <div class="" style="text-align: center; margin-bottom: 10px;">
+        <a href="../../rss.xml">Rss Feed</a>
+    </div>
+    <div class="copyright">
+        <a href="../../index.html">&lt;?php Backend.com</a>
+    </div>
+</footer>    </body>
+
+<!-- Mirrored from phpbackend.com/blog/post/what-is-new-in-php-8-2 by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 19 Jun 2025 04:34:52 GMT -->
+</html>

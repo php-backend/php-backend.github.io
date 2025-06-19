@@ -1,0 +1,382 @@
+<!doctype html>
+<html lang="en">
+    
+<!-- Mirrored from phpbackend.com/blog/post/php-8-0-named-parameters by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 19 Jun 2025 04:35:29 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
+<head>
+        <base >
+        <meta charset="UTF-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+
+        <!-- meta area -->
+                <title>PHP 8.0 : Named Parameters :: PHP Backend Related discussions at PHPBackend.com</title>
+        <meta name="keywords" content="PHP 8.0 : Named Parameters, php, backend, php backend, php 7, php 8, whats new in php 8, programming, web development, software, tutorial, blog" />
+        <meta name="description" content="PHP is very popular for it&apos;s function naming and parameter orders. I&apos;ve been working on PHP for more than 7 years and I still can&apos;t remember if $needle is the" />
+        <meta name="robots" content="index, follow" />
+                <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"> 
+
+        <link rel="dns-prefetch" href="https://cdnjs.cloudflare.com/">
+        <link rel="preload" href="../../assets/icomoon/style.css" as="style" />
+
+        <!-- stylesheet -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/css/bootstrap.min.css">
+        
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.10/styles/github.min.css" />
+
+        <link rel="stylesheet" href="../../assets/icomoon/style.css">
+
+        <style>
+            /*Default*/
+            pre {
+                display: block;
+                overflow-x: auto;
+                padding: .8em;
+                color: #333;
+                background: #f8f8f8;
+                font-size: medium;
+            }
+
+            body {
+                background-color: #fefefe;
+            }
+
+            a {
+                color: #343a40;
+            }
+
+            .article .body a {
+                text-decoration: underline;
+            }
+
+            blockquote {
+                background: #f9f9f9;
+                border-left: 10px solid #ccc;
+                margin: 1.5em 10px;
+                padding: 0.5em 10px;
+                quotes: "\201C""\201D""\2018""\2019";
+            }
+            blockquote:before {
+                color: #ccc;
+                content: open-quote;
+                font-size: 4em;
+                line-height: 0.1em;
+                margin-right: 0.25em;
+                vertical-align: -0.4em;
+            }
+            blockquote:after {
+                color: #ccc;
+                content: close-quote;
+                font-size: 4em;
+                line-height: 0.1em;
+                margin-left: 0.25em;
+                vertical-align: -0.4em;
+            }
+            blockquote p {
+                display: inline;
+            }
+
+            .article {
+                margin:15px;
+                padding: 15px;
+                /*border: 1px solid #b0b0b0;*/
+                background-color: white;
+                font-size: 1.3em;
+            }
+
+            .article .title {
+                color: #343a40;
+                font-size: 1.5em;
+                font-weight: bold;
+                margin-bottom: 0.5em;
+            }
+
+            .article .title a {
+                color: #343a40;
+            }
+            .article .meta {
+                font-size: 0.7em;
+                margin-bottom: 0.3em;
+            }
+
+            .article .slurp {
+                font-size: 0.8em;
+                font-weight: normal;
+                color: #6B6B6B;
+            }
+            .article .body {
+                margin-top: 1.2em;
+            }
+            .article .body p {
+                margin-bottom: 0.7em;
+            }
+
+            footer {
+                color: white;
+                background-color: #343a40;
+                padding: 1em;
+            }
+
+            footer a, footer a:hover {
+                color: #ffffff;
+            }
+
+            .copyright {
+                text-align: center;
+            }
+
+            @media (max-width: 800px) {
+                .article {
+                    margin-left: -10px;
+                    margin-right: -10px;
+                    margin-top: 5px;
+                    margin-bottom: 5px;
+                    font-size: 1em;
+                }
+
+                .article .title {
+                    font-size: 1.3em;
+                }
+            }
+        </style>
+
+                <meta property="og:title" content="PHP 8.0 : Named Parameters :: PHP Backend Related discussions at PHPBackend.com" />
+        <meta property="og:site_name" content="PHPBackend.com" />
+        <meta property="og:description" content="Welcome to world of PHP, the most laughed at language on the internet. Here at PHPBackend, we discuss about new php versions, tips & tricks, tutorials and rants." />
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content="https://phpbackend.com/blog/post/php-8-0-named-parameters" />
+        <meta property="og:image" content="https://phpbackend.com/images/phpbackend-og.jpg" />
+        <meta property="og:image:width" content="600" />
+        <meta property="og:image:height" content="450" />
+            </head><body>
+    <div class="bg-dark" id="navbarHeader">
+        <div class="container">
+            <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+                <a class="navbar-brand" href="../../index.html">&lt;?php Backend.com</a>
+<!--                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNavDropdown">
+                    <ul class="navbar-nav ml-auto">
+                    </ul>
+                </div>-->
+            </nav>
+        </div>
+    </div><div class="container">
+    <div class="row">
+        <div class="col-sm-10">
+                            <div class="article">
+                    <div class="title">
+                        PHP 8.0 : Named Parameters                    </div>
+                    <div class="meta">
+                        <i class="icon-calendar"></i> 17, April 2021                    </div>
+                    <hr>
+                    <div class="body">
+                        <p>PHP is very popular for it's function naming and parameter orders. I've been working on PHP for more than 7 years and I still can't remember if <strong>$needle</strong> is the first parameter in <span style="color: rgb(240, 102, 102);">strpos()</span> or <span style="color: rgb(240, 102, 102);">array_search() </span>. Also I always mixup if <strong>$callback</strong> is the second parameter on <span style="color: rgb(240, 102, 102);">array_map()</span> and <span style="color: rgb(240, 102, 102);">array_filter()</span>.</p><p>At last, PHP 8.0 introduces a way to battle with these inconsistency. Let's discuss about named parameters.</p><p><br></p><p>Named parameter is a way to pass parameter to a function by its name.</p><p>For example:</p><p>array_search() has below signature</p><pre class="ql-syntax" spellcheck="false">array_search ( mixed $needle , <span class="hljs-built_in">array</span> $haystack , <span class="hljs-keyword">bool</span> $strict = <span class="hljs-literal">false</span> ) : <span class="hljs-keyword">int</span>|<span class="hljs-built_in">string</span>|<span class="hljs-literal">false</span>
+</pre><p>So, array_search accepts three parameter. Currently, when calling this function the parameter names do not matter, we pass them by the order they are defined.</p><pre class="ql-syntax" spellcheck="false"><span class="hljs-meta">&lt;?php</span>
+$arr = [<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>];﻿
+
+<span class="hljs-keyword">return</span> array_search(<span class="hljs-number">2</span>, $arr);
+</pre><p>as $needle is defined as first parameter, we are bound to pass it at first. passing 2 as second parameter would result into error.</p><p><br></p><p>But, with named parameter, we can pass them by their name, ignoring their order.</p><pre class="ql-syntax" spellcheck="false"><span class="hljs-meta">&lt;?php</span>
+$arr = [<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>];
+
+<span class="hljs-keyword">return</span> array_search(haystack: $arr, needle: <span class="hljs-number">2</span>);
+</pre><p>Notice how we are passing <strong>$arr </strong>at first by its name haystack. It will work just like before even though we've switched the parameters.</p><p>So we don't need to remember parameter positions anymore. Both strpos and array_search can work in similar way:</p><pre class="ql-syntax" spellcheck="false">&lt;?<span class="hljs-function">php
+
+<span class="hljs-title">array_search</span><span class="hljs-params">(haystack: [<span class="hljs-number">5</span>, <span class="hljs-number">6</span>, <span class="hljs-number">7</span>], needle: <span class="hljs-number">5</span>)</span></span>;
+
+strpos(haystack: <span class="hljs-string">"this is main string"</span>, needle: <span class="hljs-string">"str"</span>);
+</pre><p><br></p><p>Another nice benefit of named parameter is, being able to skip optional parameters.</p><p><em>Optional parameter works just fine with named parameter.</em></p><pre class="ql-syntax" spellcheck="false">&lt;?<span class="hljs-function">php
+
+function <span class="hljs-title">htmlspecialchars</span>(<span class="hljs-params"><span class="hljs-keyword">string</span> $<span class="hljs-keyword">string</span>, <span class="hljs-keyword">int</span> $flags = ENT_COMPAT , <span class="hljs-keyword">string</span>|<span class="hljs-literal">null</span> $encoding = <span class="hljs-literal">null</span> , <span class="hljs-keyword">bool</span> $double_encode = <span class="hljs-literal">true</span> </span>) : <span class="hljs-keyword">string</span></span>
+{
+   <span class="hljs-comment">// do something</span>
+}
+</pre><p>Now, lets say we want to call this function but change $double_encode value, while keeping the other optional parameters to their default values:</p><pre class="ql-syntax" spellcheck="false"><span class="hljs-comment">// without named parameters</span>
+htmlspecialchars(<span class="hljs-string">"html string"</span>, ENT_COMPAT, <span class="hljs-literal">null</span>, <span class="hljs-literal">false</span>);
+<span class="hljs-comment">// very long and boring. Not readable. Can't remember what "false" is for here.</span>
+﻿
+<span class="hljs-comment">// now, named parameters</span>
+htmlspecialchars(<span class="hljs-keyword">string</span>: <span class="hljs-string">"html string"</span>, double_encode: <span class="hljs-literal">false</span>);
+<span class="hljs-comment">// isn't this nice? easily readable and we definitely know what "false" is doing here﻿</span>
+
+<span class="hljs-comment">// we can pass double_encode at first too</span>
+htmlspecialchars(double_encode: <span class="hljs-literal">false</span>, <span class="hljs-keyword">string</span>: <span class="hljs-string">"html string"</span>);
+</pre><p>Above, we didn't need to defined other optional variables (flags &amp; encoding) because they will be assigned to their default value. We don't need to pass then while calling the function. We can just skip them.</p><p><br></p><p><strong>Can we mix named parameters with regular ones?</strong></p><p>Sure. While calling the same function, we can pass both regular and named parameters.</p><pre class="ql-syntax" spellcheck="false">htmlspecialchars(
+    <span class="hljs-string">"this is html string"</span>, <span class="hljs-comment">// here we are passing parameter in regular way</span>
+    double_encode: <span class="hljs-literal">false</span>, <span class="hljs-comment">// here we are passing named parameter﻿</span>
+);
+</pre><p>But remember, regular parameter should always be at first before named parameter. Otherwise it will throw error.</p><pre class="ql-syntax" spellcheck="false"><span class="hljs-comment">// this won't work</span>
+htmlspecialchars(
+    double_encode: <span class="hljs-literal">false</span>,
+    <span class="hljs-string">"this is html string"</span>,﻿
+);
+<span class="hljs-comment">// Fatal error: Cannot use positional argument after named argument</span>
+</pre><p><br></p><p>Note: You can't pass parameter by invalid name. It'll throw error.</p><p><br></p><p><strong>Using Argument unpack operator</strong></p><p>We can use argument unpack operator (...) to pass an array of arguments to a function/method.</p><ul><li>If array keys are numeric then keys are ignored and values are treated as normal positional arguments.</li><li>If array keys are strings, key names are unpacked as a named argument.</li><li>Other key types will be TypeError.</li></ul><pre class="ql-syntax" spellcheck="false"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">subtract</span><span class="hljs-params">($a, $b)</span> </span>{
+&nbsp;&nbsp;&nbsp; <span class="hljs-keyword">return</span> $a - $b;
+}
+
+$arr = [<span class="hljs-number">5</span>, <span class="hljs-number">3</span>]; <span class="hljs-comment">// int keys</span>
+<span class="hljs-keyword">echo</span> subtract(...$arr); <span class="hljs-comment">// 2</span>
+
+$arr = [<span class="hljs-string">'b'</span> =&gt; <span class="hljs-number">3</span>, <span class="hljs-string">'a'</span> =&gt; <span class="hljs-number">5</span>]; <span class="hljs-comment">// string keys</span>
+<span class="hljs-keyword">echo</span> subtract(...$arr); <span class="hljs-comment">// 2</span>
+</pre><p><br></p><p><strong>But, there is a reason why I don't use named parameters in my code.</strong></p><p>Named parameters make parameter variable name so important that changing function argument name breaks API compatibility.</p><p>For example, lets say in my library, I've this function:</p><pre class="ql-syntax" spellcheck="false"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">add_money</span><span class="hljs-params">($wallet, $money)</span></span>{
+    <span class="hljs-comment">// something</span>
+}
+</pre><p>and you, as a user of my library, call this function with named parameters:</p><pre class="ql-syntax" spellcheck="false">add_money(
+    wallet: <span class="hljs-variable">$wallet</span>, 
+    money: <span class="hljs-variable">$money</span>
+);
+</pre><p><br></p><p>after some time , for some reason, I decide to change the parameter name to something different, like</p><pre class="ql-syntax" spellcheck="false"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">add_money</span><span class="hljs-params">($account, $amount)</span></span>{
+    <span class="hljs-comment">// something</span>
+}
+</pre><p>But if I change it, your code won't work anymore because parameter names have been changed.</p><p><br></p><p>Many Library developers don't like this. In their opinion, parameter name should not be part of API.</p><p><br></p><p>But, other than that, named parameter truly is a great addition to PHP.</p><p><br></p><p><span class="hljs-attr">RFC:</span> <a href="https://wiki.php.net/rfc/named_params" target="_blank" class="hljs-attr">https://wiki.php.net/rfc/named_params</a></p>                    </div>
+                </div>
+                            <div class="row">                    <div class="col-sm-6">
+                        <div class="article">
+                            <b>
+                                <a href="third-party-cookies-are-dead-long-live-floc-or-burn-it-with-fire.html">Third-party cookies are dead, Long live FLoC (or burn it with fire)</a>
+                            </b>
+                        </div>
+                    </div>
+                                        <div class="col-sm-6">
+                        <div class="article">
+                            <b>
+                                <a href="php-8-0-union-types.html">PHP 8.0 : Union Types</a>
+                            </b>
+                        </div>
+                    </div>
+                    </div>
+<style>
+.comments .comment_header {
+    display: flex;
+    justify-content: space-between;
+    border-bottom: 1px solid #eee;
+    padding: 15px 0;
+    margin-bottom: 10px;
+    align-items: center;
+}
+.comments .comment_header .total {
+    color: #777777;
+    font-size: 14px;
+}
+.comments .comment_header .write_comment_btn {
+    margin: 0;
+}
+.comments .write_comment_btn, .comments .write_comment button {
+    display: inline-block;
+    background-color: #565656;
+    color: #fff;
+    text-decoration: none;
+    margin: 10px 0 0 0;
+    padding: 5px 15px;
+    border-radius: 5px;
+    font-size: 14px;
+    font-weight: 600;
+    border: 0;
+}
+.comments .write_comment_btn:hover, .comments .write_comment button:hover {
+    background-color: #636363;
+}
+.comments .write_comment {
+    padding: 20px 0 10px 0;
+}
+.comments .write_comment textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    height: 150px;
+    margin-top: 10px;
+}
+.comments .write_comment input {
+    display: block;
+    width: 250px;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    margin-top: 10px;
+}
+.comments .write_comment button {
+    cursor: pointer;
+}
+.comments .comment {
+    padding-top: 10px;
+}
+.comments .comment .name {
+    display: inline;
+    padding: 0 5px 3px 0;
+    margin: 0;
+    font-size: 16px;
+    color: #555555;
+}
+.comments .comment .date {
+    color: #888888;
+    font-size: 14px;
+}
+.comments .comment .content {
+    padding: 5px 0 5px 0;
+}
+.comments .comment .reply_comment_btn {
+    display: inline-block;
+    text-decoration: none;
+    margin-bottom: 10px;
+    font-size: 14px;
+    color: #888888;
+}
+.comments .comment .replies {
+    padding-left: 30px;
+}
+</style>
+
+<div class="comments">
+   <hr>
+    <h2>Write comment about this article:</h2>
+
+    <div class="write_comment">
+        <form>
+            <input name="website" type="text" value="http://" style="display: none;">
+	    <input name="url" type="text" value="" style="display: none;">
+
+	    <input name="name" type="text" placeholder="Your Name" required>
+            <textarea name="content" placeholder="Write your comment here..." required></textarea>
+            <button type="submit">Submit Comment</button>
+        </form>
+    </div>
+
+</div>
+
+<script>
+
+document.querySelector("input[name='url']").value = window.location.href;
+
+const comments_page_id = 1; // This number should be unique on every page
+
+document.querySelectorAll(".comments .write_comment form").forEach(element => {
+		element.onsubmit = event => {
+			event.preventDefault();
+			fetch("../../post-comment.html", {
+				method: 'POST',
+				body: new FormData(element)
+			}).then(response => response.text()).then(data => {
+				element.parentElement.innerHTML = data;
+			});
+		};
+	});
+</script>
+
+        </div>
+    </div>
+</div>
+<footer>
+    <div class="" style="text-align: center; margin-bottom: 10px;">
+        <a href="../../rss.xml">Rss Feed</a>
+    </div>
+    <div class="copyright">
+        <a href="../../index.html">&lt;?php Backend.com</a>
+    </div>
+</footer>    </body>
+
+<!-- Mirrored from phpbackend.com/blog/post/php-8-0-named-parameters by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 19 Jun 2025 04:35:29 GMT -->
+</html>

@@ -1,0 +1,323 @@
+<!doctype html>
+<html lang="en">
+    
+<!-- Mirrored from phpbackend.com/blog/post/php-8-0-json-extension-is-now-always-available by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 19 Jun 2025 04:35:29 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
+<head>
+        <base >
+        <meta charset="UTF-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+
+        <!-- meta area -->
+                <title>PHP 8.0 : Json extension is now always available :: PHP Backend Related discussions at PHPBackend.com</title>
+        <meta name="keywords" content="PHP 8.0 : Json extension is now always available, php, backend, php backend, php 7, php 8, whats new in php 8, programming, web development, software, tutorial, blog" />
+        <meta name="description" content="PHP 8.0 comes with json extension statically built into it. So functions like json_encode(), json decode() can be always used without worrying about whether user has installed json extension or" />
+        <meta name="robots" content="index, follow" />
+                <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"> 
+
+        <link rel="dns-prefetch" href="https://cdnjs.cloudflare.com/">
+        <link rel="preload" href="../../assets/icomoon/style.css" as="style" />
+
+        <!-- stylesheet -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/css/bootstrap.min.css">
+        
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.10/styles/github.min.css" />
+
+        <link rel="stylesheet" href="../../assets/icomoon/style.css">
+
+        <style>
+            /*Default*/
+            pre {
+                display: block;
+                overflow-x: auto;
+                padding: .8em;
+                color: #333;
+                background: #f8f8f8;
+                font-size: medium;
+            }
+
+            body {
+                background-color: #fefefe;
+            }
+
+            a {
+                color: #343a40;
+            }
+
+            .article .body a {
+                text-decoration: underline;
+            }
+
+            blockquote {
+                background: #f9f9f9;
+                border-left: 10px solid #ccc;
+                margin: 1.5em 10px;
+                padding: 0.5em 10px;
+                quotes: "\201C""\201D""\2018""\2019";
+            }
+            blockquote:before {
+                color: #ccc;
+                content: open-quote;
+                font-size: 4em;
+                line-height: 0.1em;
+                margin-right: 0.25em;
+                vertical-align: -0.4em;
+            }
+            blockquote:after {
+                color: #ccc;
+                content: close-quote;
+                font-size: 4em;
+                line-height: 0.1em;
+                margin-left: 0.25em;
+                vertical-align: -0.4em;
+            }
+            blockquote p {
+                display: inline;
+            }
+
+            .article {
+                margin:15px;
+                padding: 15px;
+                /*border: 1px solid #b0b0b0;*/
+                background-color: white;
+                font-size: 1.3em;
+            }
+
+            .article .title {
+                color: #343a40;
+                font-size: 1.5em;
+                font-weight: bold;
+                margin-bottom: 0.5em;
+            }
+
+            .article .title a {
+                color: #343a40;
+            }
+            .article .meta {
+                font-size: 0.7em;
+                margin-bottom: 0.3em;
+            }
+
+            .article .slurp {
+                font-size: 0.8em;
+                font-weight: normal;
+                color: #6B6B6B;
+            }
+            .article .body {
+                margin-top: 1.2em;
+            }
+            .article .body p {
+                margin-bottom: 0.7em;
+            }
+
+            footer {
+                color: white;
+                background-color: #343a40;
+                padding: 1em;
+            }
+
+            footer a, footer a:hover {
+                color: #ffffff;
+            }
+
+            .copyright {
+                text-align: center;
+            }
+
+            @media (max-width: 800px) {
+                .article {
+                    margin-left: -10px;
+                    margin-right: -10px;
+                    margin-top: 5px;
+                    margin-bottom: 5px;
+                    font-size: 1em;
+                }
+
+                .article .title {
+                    font-size: 1.3em;
+                }
+            }
+        </style>
+
+                <meta property="og:title" content="PHP 8.0 : Json extension is now always available :: PHP Backend Related discussions at PHPBackend.com" />
+        <meta property="og:site_name" content="PHPBackend.com" />
+        <meta property="og:description" content="Welcome to world of PHP, the most laughed at language on the internet. Here at PHPBackend, we discuss about new php versions, tips & tricks, tutorials and rants." />
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content="https://phpbackend.com/blog/post/php-8-0-json-extension-is-now-always-available" />
+        <meta property="og:image" content="https://phpbackend.com/images/phpbackend-og.jpg" />
+        <meta property="og:image:width" content="600" />
+        <meta property="og:image:height" content="450" />
+            </head><body>
+    <div class="bg-dark" id="navbarHeader">
+        <div class="container">
+            <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+                <a class="navbar-brand" href="../../index.html">&lt;?php Backend.com</a>
+<!--                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNavDropdown">
+                    <ul class="navbar-nav ml-auto">
+                    </ul>
+                </div>-->
+            </nav>
+        </div>
+    </div><div class="container">
+    <div class="row">
+        <div class="col-sm-10">
+                            <div class="article">
+                    <div class="title">
+                        PHP 8.0 : Json extension is now always available                    </div>
+                    <div class="meta">
+                        <i class="icon-calendar"></i> 28, September 2020                    </div>
+                    <hr>
+                    <div class="body">
+                        <p>PHP 8.0 comes with json extension statically built into it. So functions like <strong style="color: rgb(240, 102, 102);">json_encode(),</strong> <strong style="color: rgb(240, 102, 102);">json decode()</strong> can be always used without worrying about whether user has installed json extension or not.</p><p><br></p><p><strong>Little Bit of History:</strong></p><p>json support was added in PHP 5.2 back in 2006.</p><p>The codebase of the extension had a specific <a href="http://www.json.org/license.html" target="_blank">license</a> That was not compatible with <strong>"Free and Open Source Software (FOSS)"</strong> Licence. As a result few linux distribution such as Debian, Ubuntu, Fedora did not ship PHP with json extension built in. There was a flag to disable json extension during PHP build. Json extension was loaded as shared library.</p><p>As several linux distro users faced problem to use json on default php setup, there was a <a href="https://bugs.php.net/bug.php?id=63520" target="_blank">demand</a> to release a <strong>"Free" </strong>version of json parser. Remi Collet, a core contributor, wrote a <a href="https://github.com/remicollet/pecl-json-c" target="_blank">json-parser</a> that has PHP license. The extension could be installed via PECL. That extension had same functionality as json.org one, so issue was partially solved.</p><p><br></p><p><strong>PHP 7 era:</strong></p><p>Then in PHP 7, another core contributor, Jakub Zelenk spend his time to write <a href="https://github.com/bukka/php-jsond" target="_blank">jsond</a> which was Drop-in alternative for the standard JSON extension. Even if jsond was enabled in php by default, It was still possible to disable json extension with <span style="color: rgb(240, 102, 102);">./configure --disable-json</span>. So, PHP Core libs couldn't rely on json if needed becuase it may not be available. Userland codebases needed to check <span style="color: rgb(240, 102, 102);">if(extension_loaded('json'))</span> before using any json functions.</p><p><br></p><p><strong>Long Live PHP 8:</strong></p><p>In current web development space, json is hugely widespread. Json can be found almost every tech stack. PHP devs did not overlook the situation. As there are no more licence issue, It is the best time to embrace json into core and ship it bundled by default. So, from now on, each PHP distribution has json (we can't disable it).</p><p>As a benefit:</p><ul><li>Core Libs can now use json functionality if they want</li><li>Userland can use json without worrying about extension loaded or not.</li></ul><p><br></p><p>RFC: <a href="https://wiki.php.net/rfc/always_enable_json" target="_blank">https://wiki.php.net/rfc/always_enable_json</a></p>                    </div>
+                </div>
+                            <div class="row">                    <div class="col-sm-6">
+                        <div class="article">
+                            <b>
+                                <a href="php-8-0-gdimage-object-is-used-instead-of-resource-type.html">PHP 8.0 : \GDImage object is used instead of resource type</a>
+                            </b>
+                        </div>
+                    </div>
+                                        <div class="col-sm-6">
+                        <div class="article">
+                            <b>
+                                <a href="third-party-cookies-are-dead-long-live-floc-or-burn-it-with-fire.html">Third-party cookies are dead, Long live FLoC (or burn it with fire)</a>
+                            </b>
+                        </div>
+                    </div>
+                    </div>
+<style>
+.comments .comment_header {
+    display: flex;
+    justify-content: space-between;
+    border-bottom: 1px solid #eee;
+    padding: 15px 0;
+    margin-bottom: 10px;
+    align-items: center;
+}
+.comments .comment_header .total {
+    color: #777777;
+    font-size: 14px;
+}
+.comments .comment_header .write_comment_btn {
+    margin: 0;
+}
+.comments .write_comment_btn, .comments .write_comment button {
+    display: inline-block;
+    background-color: #565656;
+    color: #fff;
+    text-decoration: none;
+    margin: 10px 0 0 0;
+    padding: 5px 15px;
+    border-radius: 5px;
+    font-size: 14px;
+    font-weight: 600;
+    border: 0;
+}
+.comments .write_comment_btn:hover, .comments .write_comment button:hover {
+    background-color: #636363;
+}
+.comments .write_comment {
+    padding: 20px 0 10px 0;
+}
+.comments .write_comment textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    height: 150px;
+    margin-top: 10px;
+}
+.comments .write_comment input {
+    display: block;
+    width: 250px;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    margin-top: 10px;
+}
+.comments .write_comment button {
+    cursor: pointer;
+}
+.comments .comment {
+    padding-top: 10px;
+}
+.comments .comment .name {
+    display: inline;
+    padding: 0 5px 3px 0;
+    margin: 0;
+    font-size: 16px;
+    color: #555555;
+}
+.comments .comment .date {
+    color: #888888;
+    font-size: 14px;
+}
+.comments .comment .content {
+    padding: 5px 0 5px 0;
+}
+.comments .comment .reply_comment_btn {
+    display: inline-block;
+    text-decoration: none;
+    margin-bottom: 10px;
+    font-size: 14px;
+    color: #888888;
+}
+.comments .comment .replies {
+    padding-left: 30px;
+}
+</style>
+
+<div class="comments">
+   <hr>
+    <h2>Write comment about this article:</h2>
+
+    <div class="write_comment">
+        <form>
+            <input name="website" type="text" value="http://" style="display: none;">
+	    <input name="url" type="text" value="" style="display: none;">
+
+	    <input name="name" type="text" placeholder="Your Name" required>
+            <textarea name="content" placeholder="Write your comment here..." required></textarea>
+            <button type="submit">Submit Comment</button>
+        </form>
+    </div>
+
+</div>
+
+<script>
+
+document.querySelector("input[name='url']").value = window.location.href;
+
+const comments_page_id = 1; // This number should be unique on every page
+
+document.querySelectorAll(".comments .write_comment form").forEach(element => {
+		element.onsubmit = event => {
+			event.preventDefault();
+			fetch("../../post-comment.html", {
+				method: 'POST',
+				body: new FormData(element)
+			}).then(response => response.text()).then(data => {
+				element.parentElement.innerHTML = data;
+			});
+		};
+	});
+</script>
+
+        </div>
+    </div>
+</div>
+<footer>
+    <div class="" style="text-align: center; margin-bottom: 10px;">
+        <a href="../../rss.xml">Rss Feed</a>
+    </div>
+    <div class="copyright">
+        <a href="../../index.html">&lt;?php Backend.com</a>
+    </div>
+</footer>    </body>
+
+<!-- Mirrored from phpbackend.com/blog/post/php-8-0-json-extension-is-now-always-available by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 19 Jun 2025 04:35:29 GMT -->
+</html>

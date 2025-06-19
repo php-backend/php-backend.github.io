@@ -1,0 +1,893 @@
+<feed xmlns="http://www.w3.org/2005/Atom">
+    <title><![CDATA[ PHP Backend.com ]]></title>
+    <id>https://phpbackend.com/rss.xml</id>
+    <link rel="self" href="https://phpbackend.com/rss.xml"/>
+    <updated>2023-10-28T14:41:55+00:00</updated>
+    
+    <entry>
+        <title><![CDATA[ What is new in PHP 8.2 ]]></title>
+        <link rel="alternate" href="https://phpbackend.com/blog/post/what-is-new-in-php-8-2"/>
+        <id>https://phpbackend.com/blog/post/what-is-new-in-php-8-2</id>
+        <author>
+            <name>PHP Backend</name>
+        </author>
+        <summary type="html"><![CDATA[ While not as exciting as previous release, PHP 8.2 brings some nice addition to the language. Let's have a look at them: true, false, null are standalone type now While, we could use null and false with with other types as union type, from now on they can be used separately as well. example: #On PHP 8.1
+﻿
+// union type, allowed
+﻿function bazz(): array|null
+{
+ return null;
+}
+
+// union type, allowed
+function bazz(): string|false
+{
+ return false; 
+}
+
+// null as standalone type, not allowed
+function bazz(): null
+{
+ return null;
+}
+
+// false as standalone type, not allowed
+function bazz(): false
+{
+ return false;
+}
+Two of the above function will trigger a error ]]></summary>
+        <updated>2023-10-06T16:13:53+00:00</updated>
+    </entry>
+
+    <entry>
+        <title><![CDATA[ PHP 8.1 : First Class Callable support ]]></title>
+        <link rel="alternate" href="https://phpbackend.com/blog/post/php-8-1-first-class-callable-support"/>
+        <id>https://phpbackend.com/blog/post/php-8-1-first-class-callable-support</id>
+        <author>
+            <name>PHP Backend</name>
+        </author>
+        <summary type="html"><![CDATA[ In PHP, some functions (such as call_user_func() or usort()) accept user defined functions known as callbacks. While in modern versions, php ecosystem has moved to a better alternatives called closure, callback is still supported. But callbacks are kinda ugly. Here is the examples: // functions as callback
+echo call_user_func﻿('strlen', 'hello world');
+// 11
+
+// class methods as callback
+echo call_user_func([$this, 'methodName']);﻿ 
+As we can see, callables can be stated as string or array. Which is kinda confusing when reading code and finding function usage is much harder. However, we can convert callable to closure (which is always better) but that doesn't solve the issue ]]></summary>
+        <updated>2022-11-05T15:11:19+00:00</updated>
+    </entry>
+
+    <entry>
+        <title><![CDATA[ PHP 8.1 : Pure intersection types ]]></title>
+        <link rel="alternate" href="https://phpbackend.com/blog/post/php-8-1-pure-intersection-types"/>
+        <id>https://phpbackend.com/blog/post/php-8-1-pure-intersection-types</id>
+        <author>
+            <name>PHP Backend</name>
+        </author>
+        <summary type="html"><![CDATA[ Intersection types, a new addition to PHP type system that allows us to constraint a value to satisfy multiple types at same time. Until PHP 8.0, we could only define a single type as parameter/return/property type. On PHP 8.1, we got Union type, which allowed us to restrict a value to satisfy either type X OR type Y. Intersection type is exactly the opposite of that. It allows us to restrict a value to satisfy both type X AND type Y. &amp;lt;?php
+interface X {}
+
+interface Y {}
+
+class A {
+&amp;nbsp;&amp;nbsp;&amp;nbsp;// UNION type, $param must be either X or Y
+&amp;nbsp;&amp;nbsp;&amp;nbsp;public function foo(X|Y $param) ]]></summary>
+        <updated>2022-10-07T08:19:49+00:00</updated>
+    </entry>
+
+    <entry>
+        <title><![CDATA[ PHP 8.1 : MySQLi default error mode switched to strict ]]></title>
+        <link rel="alternate" href="https://phpbackend.com/blog/post/php-8-1-mysql-error-mode-switched-to-strict"/>
+        <id>https://phpbackend.com/blog/post/php-8-1-mysql-error-mode-switched-to-strict</id>
+        <author>
+            <name>PHP Backend</name>
+        </author>
+        <summary type="html"><![CDATA[ Legacy PHP apps are way too scared of errors. They suppress them, silent them, hide them under the carpet. Most of the time they forget about them. PHP developers are like some character in psychological horror movie who doesn't want to remember what he did last night (spoiler: he killed someone). As a result, error_reporting is set to off, @ is used before most of the brat functions. I have even seen people to wrap a giant try-catch block around their whole code, off course the catch block was empty. What do you mean logging the errors? Why would we ]]></summary>
+        <updated>2022-04-23T06:21:55+00:00</updated>
+    </entry>
+
+    <entry>
+        <title><![CDATA[ PHP 8.1 : Deprecate autovivification on false ]]></title>
+        <link rel="alternate" href="https://phpbackend.com/blog/post/php-8-1-deprecate-autovivification-on-false"/>
+        <id>https://phpbackend.com/blog/post/php-8-1-deprecate-autovivification-on-false</id>
+        <author>
+            <name>PHP Backend</name>
+        </author>
+        <summary type="html"><![CDATA[ Autovivification means automatic creation of array (or hash) when we try to assign a new element to a non-array variable. In such case, PHP will create an array as if it was defined as array originally. For example: &amp;lt;?php
+
+$notexists['key'] = 'value';
+// php will create $notexists even though it didn't exist
+print_r($notexists);
+// ﻿Array ( [key] =&amp;gt; value )
+
+// same thing for null variable
+$nullvar = null;
+
+$nullvar['key'] = 'value';
+// php will create $nullvar as array even though was null
+print_r($nullvar);
+// ﻿Array ( [key] =&amp;gt; value )
+
+
+// PHP even does it for false value
+$var = false;
+
+$var['key'] = 'value';
+print_r($var);
+// ﻿Array ( [key] =&amp;gt; value )
+ Umm, excuse ]]></summary>
+        <updated>2022-04-16T05:42:13+00:00</updated>
+    </entry>
+
+    <entry>
+        <title><![CDATA[ Improving mysqldump speed on large database ]]></title>
+        <link rel="alternate" href="https://phpbackend.com/blog/post/improving-mysqldump-speed-on-large-database"/>
+        <id>https://phpbackend.com/blog/post/improving-mysqldump-speed-on-large-database</id>
+        <author>
+            <name>PHP Backend</name>
+        </author>
+        <summary type="html"><![CDATA[ mysqldump is a tool to create dump of existing mysql/mariadb database(s). The generated dump usually contains SQL statements but also can be generated in csv, xml format. The dump is commonly used for backup purpose or to transfer db schema &amp;amp; contents to different server. Recently I have started working on an old projects that has some bash scripts to maintain backups every night. By monitoring, I noticed that the website stays unresponsive for few minutes while the DB backup script runs. Being curious I decided to find the culprit. (spoilers: it was me years ago, who wrote the script, ]]></summary>
+        <updated>2022-01-30T17:02:30+00:00</updated>
+    </entry>
+
+    <entry>
+        <title><![CDATA[ How to setup Bobthefish theme for Fish shell on Docker/Server ]]></title>
+        <link rel="alternate" href="https://phpbackend.com/blog/post/how-to-setup-bobthefish-theme-for-fish-shell-on-docker-server"/>
+        <id>https://phpbackend.com/blog/post/how-to-setup-bobthefish-theme-for-fish-shell-on-docker-server</id>
+        <author>
+            <name>PHP Backend</name>
+        </author>
+        <summary type="html"><![CDATA[ It's been years since I became fan of FISH shell (Friendly Interactive Shell). Fish is a modern shell which can work alongside with similar shells like Bash, Zsh. While I still write my scripts in Bash, fish has been default shell on my desktop. It has lots of fancy features that I like over bash. Fish is not POSIX compliant, so it has different syntax than Bash and alike. Here is a list of features that helps me with everyday tasks: When I start writing anything, fish suggests possible command according to history or current directory or available commands.Search through ]]></summary>
+        <updated>2022-01-28T16:06:04+00:00</updated>
+    </entry>
+
+    <entry>
+        <title><![CDATA[ PHP 8.1: Readonly properties ]]></title>
+        <link rel="alternate" href="https://phpbackend.com/blog/post/php-8-1-readonly-properties"/>
+        <id>https://phpbackend.com/blog/post/php-8-1-readonly-properties</id>
+        <author>
+            <name>PHP Backend</name>
+        </author>
+        <summary type="html"><![CDATA[ From PHP 8.1, we've got readonly properties that can not be modified after it has been initialized. What a great addition that helps us to create immutable objects much more easily. Prior to this, if we wanted to create an immutable object, we had to make class properties private/protected then expose those property with public getter method. &amp;lt;?php
+
+class Person {
+&amp;nbsp;&amp;nbsp; &amp;nbsp;private string $name;
+
+&amp;nbsp;&amp;nbsp; &amp;nbsp;public function __construct(string $name)
+&amp;nbsp;&amp;nbsp; &amp;nbsp;{
+&amp;nbsp;&amp;nbsp; &amp;nbsp;&amp;nbsp;&amp;nbsp; &amp;nbsp;$this-&amp;gt;name = $name;
+&amp;nbsp;&amp;nbsp; &amp;nbsp;}
+&amp;nbsp;&amp;nbsp; &amp;nbsp;
+&amp;nbsp;&amp;nbsp; &amp;nbsp;public function getName(): string
+&amp;nbsp;&amp;nbsp; &amp;nbsp;{
+&amp;nbsp;&amp;nbsp; &amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp; return $this-&amp;gt;name;
+&amp;nbsp;&amp;nbsp; &amp;nbsp;}
+}
+
+$person = new Person(&quot;Alice&quot;);
+
+// we can read $name
+echo $person-&amp;gt;getName();
+
+// but we can't modify $name
+$person-&amp;gt;name = 'Bob';
+// Uncaught Error: ]]></summary>
+        <updated>2021-12-20T09:23:39+00:00</updated>
+    </entry>
+
+    <entry>
+        <title><![CDATA[ How to fix author name/email in last Nth git commits ]]></title>
+        <link rel="alternate" href="https://phpbackend.com/blog/post/how-to-fix-author-name-email-in-last-nth-git-commits"/>
+        <id>https://phpbackend.com/blog/post/how-to-fix-author-name-email-in-last-nth-git-commits</id>
+        <author>
+            <name>PHP Backend</name>
+        </author>
+        <summary type="html"><![CDATA[ Yesterday, I docker-compose exec into a docker container and wanted to see what author name/email is set in git config globally. So I ran this command: git config user.email --global
+For whatever reason, I didn't look at the output and forgot about it. After an hour, I made some commit and wanted to push them. By habit, I ran git log and noticed that commit author email is not my email. It's --global What?!? Then I remember what I ran earlier and realized that I misplaced --global flag in wrong place. The flag should have been before user.email git config --global ]]></summary>
+        <updated>2021-12-15T08:35:35+00:00</updated>
+    </entry>
+
+    <entry>
+        <title><![CDATA[ PHP Docker error: 'Call to undefined function imagecreatefromjpeg()' ]]></title>
+        <link rel="alternate" href="https://phpbackend.com/blog/post/php-docker-error-call-to-undefined-function-imagecreatefromjpeg"/>
+        <id>https://phpbackend.com/blog/post/php-docker-error-call-to-undefined-function-imagecreatefromjpeg</id>
+        <author>
+            <name>PHP Backend</name>
+        </author>
+        <summary type="html"><![CDATA[ Few days ago I was trying to adopt docker containers into a project developement flow. Since that project uses GD extension for manipulate images in PHP, I enabled GD in PHP container. But when I ran Psalm, a static analyzer, it reported with a error that says: Call to undefined function imagecreatefromjpeg() I was kinda baffled, surely I installed gd extension and enabled it in my Dockerfile, then why php can't load this function? After a quick google search, I found the issue. I didn't configure GD extension with libjpeg support. Oh, rookie mistake, I thought. I then installed libjpeg-dev ]]></summary>
+        <updated>2021-12-12T07:58:34+00:00</updated>
+    </entry>
+
+    <entry>
+        <title><![CDATA[ PHP 8.1 : Phasing out Serializable Interface ]]></title>
+        <link rel="alternate" href="https://phpbackend.com/blog/post/php-8-1-phasing-out-serializable-interface"/>
+        <id>https://phpbackend.com/blog/post/php-8-1-phasing-out-serializable-interface</id>
+        <author>
+            <name>PHP Backend</name>
+        </author>
+        <summary type="html"><![CDATA[ PHP 7.4 pointed out some issues with Serializable interface and introduced a new mechanism to customize object serialization. And PHP 8.1 has started to phase out usage of Serializable interface as much as possible. PHP 8.1 will trigger deprecation warning if any class implements Serializable interface but do not contain __serialize()/__unserialize() method. Such class will totally stop working from PHP 9.0 as Serializable interface will be removed. But I want to support both PHP &amp;lt;7.4 and 8.1 To support &amp;lt;7.4 versions, we can implement both Serializable interface and __serialize()/__unserialize(). On &amp;lt;7.4 versions, PHP will keep using the Serializable interface while ]]></summary>
+        <updated>2021-11-20T08:14:40+00:00</updated>
+    </entry>
+
+    <entry>
+        <title><![CDATA[ PHP 7.4 : New custom object serialization mechanism ]]></title>
+        <link rel="alternate" href="https://phpbackend.com/blog/post/php-7-4-new-custom-object-serialization-mechanism"/>
+        <id>https://phpbackend.com/blog/post/php-7-4-new-custom-object-serialization-mechanism</id>
+        <author>
+            <name>PHP Backend</name>
+        </author>
+        <summary type="html"><![CDATA[ If we want to customize php object serialization, currently we have only two option: __sleep()/__wakeup() magic methodSerializable interfaceBut, both of them has some limitations and downsides. Serializable does not work reliably when used in nested serialize() calls. This situation can happen when we attempt to compose serialization through the use of parent::serialize(). Another issue is, to ensure unserialize() happens in correct context, it needs to be performed immediately. But this can lead to unsafe usage of object in unserialize(), as the object may not be fully initiated yet. Also, as serialize() can return data in arbitrary format, making analyzing that ]]></summary>
+        <updated>2021-11-03T07:35:17+00:00</updated>
+    </entry>
+
+    <entry>
+        <title><![CDATA[ PHP 8.1 : Bind parameters with execute() method in mysqli ]]></title>
+        <link rel="alternate" href="https://phpbackend.com/blog/post/php-8-1-bind-parameters-with-execute-method-in-mysqli"/>
+        <id>https://phpbackend.com/blog/post/php-8-1-bind-parameters-with-execute-method-in-mysqli</id>
+        <author>
+            <name>PHP Backend</name>
+        </author>
+        <summary type="html"><![CDATA[ Compared to PDO, mysqli is bit more verbose in some place. Binding parameters for prepared statement is one of them. In PDO, you can just pass an array as a parameter to execute() method and it will bind those array elements as parameter for the SQL statement. But in mysqli, we have a separate method bind_param() for it, with some limitation. Why bind_param is not enough? bind_param() expects arguments by reference, so you can't pass any data directly to it without assigning to a variable first. $stmt = $mysqli-&amp;gt;prepare('SELECT name FROM users WHERE id = ?');
+$stmt-&amp;gt;bind_param('i', 100); // it won't ]]></summary>
+        <updated>2021-10-24T10:59:18+00:00</updated>
+    </entry>
+
+    <entry>
+        <title><![CDATA[ PHP 8.1 : new fetch_column() method for mysqli ]]></title>
+        <link rel="alternate" href="https://phpbackend.com/blog/post/php-8-1-new-fetch-column-method-for-mysqli"/>
+        <id>https://phpbackend.com/blog/post/php-8-1-new-fetch-column-method-for-mysqli</id>
+        <author>
+            <name>PHP Backend</name>
+        </author>
+        <summary type="html"><![CDATA[ Besides PDO, many of us still use mysqli to interact with MySQL database from PHP. Compared to PDO, mysqli lacks several functionality that could help us to write less code than it is necessary. Ability to fetch single column value is such missing functionality in mysqli. To fetch a single column value, you need to use fetchColumn() method in PDO $stmt = $pdo-&amp;gt;prepare(&quot;SELECT name FROM persons WHERE id = 10&quot;);
+$stmt-&amp;gt;execute();
+
+echo $stmt-&amp;gt;fetchColumn();
+// Alice
+Until now, mysqli didn't have any simple method to fetch such data. Current fetch related methods in mysqli usually either returns array or stdClass. Fetching a single column data ]]></summary>
+        <updated>2021-10-24T10:16:16+00:00</updated>
+    </entry>
+
+    <entry>
+        <title><![CDATA[ PHP 8.1 : Accessing private/protected properties &amp; methods via reflection API is now allowed without calling setAccessible() ]]></title>
+        <link rel="alternate" href="https://phpbackend.com/blog/post/php-8-1-accessing-private-protected-properties-methods-via-reflection-api-is-now-allowed-without-calling-setAccessible"/>
+        <id>https://phpbackend.com/blog/post/php-8-1-accessing-private-protected-properties-methods-via-reflection-api-is-now-allowed-without-calling-setAccessible</id>
+        <author>
+            <name>PHP Backend</name>
+        </author>
+        <summary type="html"><![CDATA[ PHP has a set of reflection APIs that can to used to introspect classes, interfaces, functions, methods and extensions. Among many other feature, reflection allows us to access class properties and invoke class methods even if they are declared as private/protected. I heavily use it to write unit tests for private methods in some legacy project where testing public methods is too complex. So, how does one do it? class Foo {
+&amp;nbsp;&amp;nbsp;&amp;nbsp; private $bar = 'a';
+&amp;nbsp;&amp;nbsp; &amp;nbsp;
+&amp;nbsp;&amp;nbsp;&amp;nbsp; protected function call() {
+&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp; return 'bazz';
+&amp;nbsp;&amp;nbsp;&amp;nbsp; }
+}
+
+
+$obj = new Foo;
+
+// lets create reflection for private $bar property
+$reflectedProperty = new ReflectionProperty(Foo::class, 'bar');
+
+// set it ]]></summary>
+        <updated>2021-10-16T06:24:17+00:00</updated>
+    </entry>
+
+    <entry>
+        <title><![CDATA[ PHP 8.1 : Final class constants ]]></title>
+        <link rel="alternate" href="https://phpbackend.com/blog/post/php-8-1-final-class-constants"/>
+        <id>https://phpbackend.com/blog/post/php-8-1-final-class-constants</id>
+        <author>
+            <name>PHP Backend</name>
+        </author>
+        <summary type="html"><![CDATA[ Before PHP 8.1, we were allowed to override parent class constants on child class. It can create some confusion since constants are not supposed to be changed. To deal with it, PHP 8.1 introduces final keyword to define class constant as final or non-overridable. class Foo {
+ public const ABC = 'some';﻿
+}
+
+class Bar extends Foo {
+ public const ABC = 'thing'; // php allows to override this const
+}﻿
+
+// but if we use final constants
+class Foo {
+ final public const ABC = 'some';﻿
+}
+
+class Bar extends Foo {
+ public const ABC = 'thing'; // not allowed
+}﻿
+
+// Fatal error: Bar::ABC cannot override final ]]></summary>
+        <updated>2021-09-25T08:14:11+00:00</updated>
+    </entry>
+
+    <entry>
+        <title><![CDATA[ PHP 8.1 : Allow use of new expressions inside parameter default values and other initializers ]]></title>
+        <link rel="alternate" href="https://phpbackend.com/blog/post/php-8-1-allow-use-of-new-expressions-inside-parameter-default-values-and-other-initializers"/>
+        <id>https://phpbackend.com/blog/post/php-8-1-allow-use-of-new-expressions-inside-parameter-default-values-and-other-initializers</id>
+        <author>
+            <name>PHP Backend</name>
+        </author>
+        <summary type="html"><![CDATA[ new expression is used to create an instance of a class. But it was not allowed to be used as parameter default values. So up until now we had to do something like this: function execute($query, $connection = null) {
+ $connection ??= new DefaultConnection(); // DefaultConnection will be used if no $connection passed
+
+ // now execute the query﻿
+}
+But, problem with this is, it's not possible to know what is the actual default value for $connection by reading function signature only. We have to read the full function body to know it. Also, it is bit more verbose. So to make ]]></summary>
+        <updated>2021-09-16T07:16:23+00:00</updated>
+    </entry>
+
+    <entry>
+        <title><![CDATA[ PHP 8.1 : Array unpacking with string keys ]]></title>
+        <link rel="alternate" href="https://phpbackend.com/blog/post/php-8-1-array-unpacking-with-string-keys"/>
+        <id>https://phpbackend.com/blog/post/php-8-1-array-unpacking-with-string-keys</id>
+        <author>
+            <name>PHP Backend</name>
+        </author>
+        <summary type="html"><![CDATA[ From PHP 7.4, we have array spread/unpack operator that works with arrays with integer keys. At that time, argument unpacking didn't support string keys too, so array unpack functionality was consistent with it. But on PHP 8.0, argument unpacking started supporting string keys too via Named Parameters. Now PHP 8.1 enables us to unpack regular arrays with string keys too. YAY! Regular arrays with no duplicate keys just gets appended. $arr1 = ['a' =&amp;gt; 1, 'c' =&amp;gt; 3];
+$arr2 = ['b' =&amp;gt; 2, 'd' =&amp;gt; 4];
+
+print_r([...$arr1, ...$arr2]);
+// Array(
+//&amp;nbsp;&amp;nbsp;&amp;nbsp; [a] =&amp;gt; 1
+//&amp;nbsp;&amp;nbsp;&amp;nbsp; [c] =&amp;gt; 3
+//&amp;nbsp;&amp;nbsp;&amp;nbsp; [b] =&amp;gt; 2
+//&amp;nbsp;&amp;nbsp;&amp;nbsp; [d] =&amp;gt; 4
+//)
+ If ]]></summary>
+        <updated>2021-09-12T06:23:07+00:00</updated>
+    </entry>
+
+    <entry>
+        <title><![CDATA[ PHP 8.0 : `mixed` type ]]></title>
+        <link rel="alternate" href="https://phpbackend.com/blog/post/php-8-0-mixed-type"/>
+        <id>https://phpbackend.com/blog/post/php-8-0-mixed-type</id>
+        <author>
+            <name>PHP Backend</name>
+        </author>
+        <summary type="html"><![CDATA[ Type system before PHP 7.0 era was...ummm...not so good. If you ever worked in a project that was built in PHP 5.*, you will notice that they hardly contain any type related info. Even if you can define types via docblock, many devs just ignore them or forget to update them. If you need to modernize such legacy project, you will have to fight with codebase to figure out parameter/return types of some methods. Some methods do so much work in themselves that they accepts and returns multiple types of data. In some places you might have to keep them ]]></summary>
+        <updated>2021-08-21T11:54:16+00:00</updated>
+    </entry>
+
+    <entry>
+        <title><![CDATA[ PHP 8.0 : non-capturing catches ]]></title>
+        <link rel="alternate" href="https://phpbackend.com/blog/post/php-8-0-non-capturing-catches"/>
+        <id>https://phpbackend.com/blog/post/php-8-0-non-capturing-catches</id>
+        <author>
+            <name>PHP Backend</name>
+        </author>
+        <summary type="html"><![CDATA[ Exceptions are great way to signal any disruptions of the normal flow of our application. It can represent a error, invalid data or logic. Any event that our softwares do not expect can be represent via exception. Alongside type improvement, PHP also improving it's exception handling system. Even, internal functions can now throw exceptions such as TypeError, ValueError. Previously they used warning for same logic. Now, we can catch exceptions by only their type. What does that mean? Currently, we can catch exceptions in our PHP code by try{} catch() block: &amp;lt;?php
+
+try {
+ someFunction(); // function may throw RuntimeException
+}﻿ catch ]]></summary>
+        <updated>2021-08-07T08:21:34+00:00</updated>
+    </entry>
+
+    <entry>
+        <title><![CDATA[ PHP 8.0 : `static` return type ]]></title>
+        <link rel="alternate" href="https://phpbackend.com/blog/post/php-8-0-static-return-type"/>
+        <id>https://phpbackend.com/blog/post/php-8-0-static-return-type</id>
+        <author>
+            <name>PHP Backend</name>
+        </author>
+        <summary type="html"><![CDATA[ Recently, usage of named construct has increased within PHP ecosystem. Named Construct gives us a readable and flexible way to create object from different types of data. With static return type, we now can properly define return type of these named construct. Lets see what are named constructs? &amp;lt;?php
+
+class User
+{
+&amp;nbsp; public function __construct(private string $name, private string $email, private int $age)
+&amp;nbsp; {&amp;nbsp;&amp;nbsp; &amp;nbsp;
+&amp;nbsp; }
+&amp;nbsp;
+&amp;nbsp; public static function fromJson(string $json)
+&amp;nbsp; {
+&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp; $data = json_decode($json);
+&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp; &amp;nbsp;
+&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp; return new static($data-&amp;gt;name, $data-&amp;gt;email, $data-&amp;gt;age);
+&amp;nbsp; }
+}
+in above snippet, we can create User object from a json string (maybe from API) by calling User::fromJson() named construct. As ]]></summary>
+        <updated>2021-07-12T16:27:14+00:00</updated>
+    </entry>
+
+    <entry>
+        <title><![CDATA[ PHP 8.1 : Passing null to non-nullable arguments of internal functions is deprecated ]]></title>
+        <link rel="alternate" href="https://phpbackend.com/blog/post/php-8-1-passing-null-to-non-nullable-arguments-of-internal-functions-is-deprecated"/>
+        <id>https://phpbackend.com/blog/post/php-8-1-passing-null-to-non-nullable-arguments-of-internal-functions-is-deprecated</id>
+        <author>
+            <name>PHP Backend</name>
+        </author>
+        <summary type="html"><![CDATA[ Before PHP 8.1, we could pass null as argument to internal functions even if it does not accept null. On strict_types=1 mode, this triggers TypeError, but on normal/default mode, PHP just silently convert null to the accepted type of that internal function. For example: var_dump(str_contains(&quot;foobar&quot;, null)); // bool(true)
+str_contains expects both $haystack &amp;amp; $needle to be string, but even if we pass null to it, php accepts it and tries to convert null to string, which is blank string &quot;&quot;. As a result function returns true. Even if we passed invalid data to it. /r/lolphp PHP 8.1 tries to improve this ]]></summary>
+        <updated>2021-06-02T17:40:32+00:00</updated>
+    </entry>
+
+    <entry>
+        <title><![CDATA[ PHP 8.1 : array_is_list() ]]></title>
+        <link rel="alternate" href="https://phpbackend.com/blog/post/php-8-1-array_is_list"/>
+        <id>https://phpbackend.com/blog/post/php-8-1-array_is_list</id>
+        <author>
+            <name>PHP Backend</name>
+        </author>
+        <summary type="html"><![CDATA[ array is a very powerful tool in PHP codebase. PHP developers love to (ab)use arrays to solve every problem they encounter. array being very flexible at storing any type of data in any structure is really (not) blessing in PHP projects. Huge bunch of array_* functions are there to help us with all kind of array handling. array_is_list() is new addition to them. What is list? in array context, list means an array whose first index is 0 and every index after that increases by +1. So all index must be sequential integers. So [0 =&amp;gt; 'a', 1 =&amp;gt; 'b', ]]></summary>
+        <updated>2021-05-28T20:54:04+00:00</updated>
+    </entry>
+
+    <entry>
+        <title><![CDATA[ PHP 8.1 : `never` return type ]]></title>
+        <link rel="alternate" href="https://phpbackend.com/blog/post/php-8-1-never-return-type"/>
+        <id>https://phpbackend.com/blog/post/php-8-1-never-return-type</id>
+        <author>
+            <name>PHP Backend</name>
+        </author>
+        <summary type="html"><![CDATA[ Prepare for death, ye who enter here.Nope, this is not a threat. this is just explanation of newly introduced never return type in PHP 8.1 Umm, what? Calm down. Let's try to demonstrate what problem we can solve with this never return type. Say, in our app, we have a method that only throws a exception, does not return anything of sort. It just prepares proper exception and throws it. But why would we create a method just to throw exception? - Sometime, you should. Proper self-explained exception message can be very much helpful during debugging. And to prepare well-formatted ]]></summary>
+        <updated>2021-04-24T18:41:16+00:00</updated>
+    </entry>
+
+    <entry>
+        <title><![CDATA[ PHP 8.0 : Union Types ]]></title>
+        <link rel="alternate" href="https://phpbackend.com/blog/post/php-8-0-union-types"/>
+        <id>https://phpbackend.com/blog/post/php-8-0-union-types</id>
+        <author>
+            <name>PHP Backend</name>
+        </author>
+        <summary type="html"><![CDATA[ PHP is improving it's type system in every release. Type safety is a great approach to increase data integrity and reduce bugs overall in software. A combination of declare(strict_types=1);&amp;nbsp;and static analyzer like psalm can really help us to improve our code quality. On PHP 7.4, we got things like Property Types &amp;amp; Contra/Co variant type support that helped us to define a specific type to property/parameter. PHP 8.0 now enables us to define multiple type to a single property/parameter/return, which is called &quot;Union Type&quot;. Union Types Currently we declare type this way: &amp;lt;?php
+﻿
+class Foo
+{
+&amp;nbsp;&amp;nbsp;&amp;nbsp;public string $bar;
+
+&amp;nbsp;&amp;nbsp;&amp;nbsp;public function baz(int $user): string
+&amp;nbsp;&amp;nbsp;&amp;nbsp;{
+&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;// ]]></summary>
+        <updated>2021-04-18T09:01:00+00:00</updated>
+    </entry>
+
+    <entry>
+        <title><![CDATA[ PHP 8.0 : Named Parameters ]]></title>
+        <link rel="alternate" href="https://phpbackend.com/blog/post/php-8-0-named-parameters"/>
+        <id>https://phpbackend.com/blog/post/php-8-0-named-parameters</id>
+        <author>
+            <name>PHP Backend</name>
+        </author>
+        <summary type="html"><![CDATA[ PHP is very popular for it's function naming and parameter orders. I've been working on PHP for more than 7 years and I still can't remember if $needle is the first parameter in strpos() or array_search() . Also I always mixup if $callback is the second parameter on array_map() and array_filter(). At last, PHP 8.0 introduces a way to battle with these inconsistency. Let's discuss about named parameters. Named parameter is a way to pass parameter to a function by its name. For example: array_search() has below signature array_search ( mixed $needle , array $haystack , bool $strict = false ]]></summary>
+        <updated>2021-04-17T20:04:22+00:00</updated>
+    </entry>
+
+    <entry>
+        <title><![CDATA[ Third-party cookies are dead, Long live FLoC (or burn it with fire) ]]></title>
+        <link rel="alternate" href="https://phpbackend.com/blog/post/third-party-cookies-are-dead-long-live-floc-or-burn-it-with-fire"/>
+        <id>https://phpbackend.com/blog/post/third-party-cookies-are-dead-long-live-floc-or-burn-it-with-fire</id>
+        <author>
+            <name>PHP Backend</name>
+        </author>
+        <summary type="html"><![CDATA[ Aahh, Cookies. What a delicious way to track people online. It's even better when served to/from third party. But how do they work and why everyone wants it to be dead? Lets say, you are visiting Site ASite A uses Google Analytics to track it's visitorsSo, when you visited Site A, it calls Google Analytics and then Google Analytics assigns a cookie to your browser. This cookie is called Third-party cookie, because instead of the site you're visiting, it came from a third party site.This third-party cookie contains a unique id that references that you've visited Site ANow, few moments ]]></summary>
+        <updated>2021-04-17T11:21:18+00:00</updated>
+    </entry>
+
+    <entry>
+        <title><![CDATA[ PHP 8.0 : Json extension is now always available ]]></title>
+        <link rel="alternate" href="https://phpbackend.com/blog/post/php-8-0-json-extension-is-now-always-available"/>
+        <id>https://phpbackend.com/blog/post/php-8-0-json-extension-is-now-always-available</id>
+        <author>
+            <name>PHP Backend</name>
+        </author>
+        <summary type="html"><![CDATA[ PHP 8.0 comes with json extension statically built into it. So functions like json_encode(), json decode() can be always used without worrying about whether user has installed json extension or not. Little Bit of History: json support was added in PHP 5.2 back in 2006. The codebase of the extension had a specific license That was not compatible with &quot;Free and Open Source Software (FOSS)&quot; Licence. As a result few linux distribution such as Debian, Ubuntu, Fedora did not ship PHP with json extension built in. There was a flag to disable json extension during PHP build. Json extension was ]]></summary>
+        <updated>2020-09-28T06:18:23+00:00</updated>
+    </entry>
+
+    <entry>
+        <title><![CDATA[ PHP 8.0 : \GDImage object is used instead of resource type ]]></title>
+        <link rel="alternate" href="https://phpbackend.com/blog/post/php-8-0-gdimage-object-is-used-instead-of-resource-type"/>
+        <id>https://phpbackend.com/blog/post/php-8-0-gdimage-object-is-used-instead-of-resource-type</id>
+        <author>
+            <name>PHP Backend</name>
+        </author>
+        <summary type="html"><![CDATA[ From PHP 8.0, All GD functions with work with \GDImage class object instead of 'resource' type. Similar to : CurlHandle Object What is GD? GD is an open source library for the dynamic creation of images. This functionality in available in PHP via an 'gd' extension. This extenstion provide several functions such as : imagecreate(), imagecreatetruecolor(), imagecopyresampled() to create and manipulate images. So, How this change affects me? If you are using GD library, This will slightly require you to look into your existing code if you have 'is_resource()' check in it. As gd functions now accept and return \GDImage ]]></summary>
+        <updated>2020-09-28T03:09:12+00:00</updated>
+    </entry>
+
+    <entry>
+        <title><![CDATA[ PHP 8.0 : Nullsafe operator ]]></title>
+        <link rel="alternate" href="https://phpbackend.com/blog/post/php-8-0-nullsafe-operator"/>
+        <id>https://phpbackend.com/blog/post/php-8-0-nullsafe-operator</id>
+        <author>
+            <name>PHP Backend</name>
+        </author>
+        <summary type="html"><![CDATA[ In today's programming world, usage of null is heavily discouraged. Reckless use of null can lead to unexpected behavior in software. But PHP being a web oriented language, null is still found in code every now and then. Null type is used to indicate lack of existence of value. But, null in our code forces us to write more code to validate if our variable has any value to work with it. Like this: &amp;lt;?php
+
+$user = null;
+// $user is loaded from different place, 
+// so we don't know if it is null or not
+
+if($user !== null){
+ $permission = $user-&amp;gt;getPermission();
+ if($permission ]]></summary>
+        <updated>2020-08-15T12:14:47+00:00</updated>
+    </entry>
+
+    <entry>
+        <title><![CDATA[ PHP 8.0 : Allow ::class on object instance variable ]]></title>
+        <link rel="alternate" href="https://phpbackend.com/blog/post/php-8-0-allow-class-on-object-instance-variable"/>
+        <id>https://phpbackend.com/blog/post/php-8-0-allow-class-on-object-instance-variable</id>
+        <author>
+            <name>PHP Backend</name>
+        </author>
+        <summary type="html"><![CDATA[ From PHP 8.0, we can use ::class on object instance variables to get its fully qualified class name. Previously we used get_class($object) to achieve the same thing. And if we want to respect context dependent resolution rule and get class name, then we rely on Foo\ClassName::class &amp;lt;?php
+
+namespace FOO {
+
+&amp;nbsp;&amp;nbsp;&amp;nbsp; class BAZ {}
+&amp;nbsp;&amp;nbsp; &amp;nbsp;
+&amp;nbsp;&amp;nbsp;&amp;nbsp; class BAR {
+&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp; public function test() {
+&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp; var_dump(BAZ::class);
+&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp; }
+&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp; &amp;nbsp;
+&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp; public function test2() {
+&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp; var_dump(\BAZ::class);
+&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp; }
+&amp;nbsp;&amp;nbsp;&amp;nbsp; }
+}
+
+namespace {
+
+class BAZ {}
+
+$bar = new \FOO\BAR();
+$bar-&amp;gt;test();
+// string(7) &quot;FOO\BAZ&quot;
+$bar-&amp;gt;test2();
+// string(3) &quot;BAZ&quot;
+}
+As we can see, BAZ::class has resolved to &quot;FOO\BAZ&quot; respecting namespace. There are other other ways like &quot;self::class&quot; &amp;amp; &quot;static::class&quot; Due ]]></summary>
+        <updated>2020-08-08T08:54:00+00:00</updated>
+    </entry>
+
+    <entry>
+        <title><![CDATA[ PHP 8.0 : get_debug_type() ]]></title>
+        <link rel="alternate" href="https://phpbackend.com/blog/post/php-8-0-get-debug-type"/>
+        <id>https://phpbackend.com/blog/post/php-8-0-get-debug-type</id>
+        <author>
+            <name>PHP Backend</name>
+        </author>
+        <summary type="html"><![CDATA[ PHP already has gettype() for getting type of a php variable. But It is kinda outdated. It returns type name that defined in PHP 5 era. In PHP 7, type system has improved much. To reflect that improved types, PHP 8 has introduced a new function get_debug_type() . It returns native type names and also resolves class names. But, how is it any different from gettype()? Lets find out with code... $int = 1;
+
+gettype($int);
+// &quot;integer&quot;
+
+get_debug_type($int);
+// &quot;int&quot;
+ $float = 1.2;
+
+gettype($float);
+// &quot;double&quot;
+﻿
+get_debug_type($float);
+// &quot;float&quot;
+For historical reasons, gettype() returns double for float type. get_debug_type() returns the right type name. $string = 'text';
+
+gettype($string);
+// &quot;string&quot;
+﻿
+get_debug_type($string);
+// &quot;string&quot;
+ ]]></summary>
+        <updated>2020-08-08T07:16:13+00:00</updated>
+    </entry>
+
+    <entry>
+        <title><![CDATA[ PHP 8.0 : Class constructor property promotion ]]></title>
+        <link rel="alternate" href="https://phpbackend.com/blog/post/php-8-0-class-constructor-property-promotion"/>
+        <id>https://phpbackend.com/blog/post/php-8-0-class-constructor-property-promotion</id>
+        <author>
+            <name>PHP Backend</name>
+        </author>
+        <summary type="html"><![CDATA[ Class properties are a great way to store statefull data in object. Sometimes we accept and set them via __construct(), sometime we set them via a setter, some other time we initiate them internally in the class. When we accept class properties in __construct(), the resulting class code becomes like this: &amp;lt;?php
+
+class Car
+{
+&amp;nbsp; protected string $brand;
+&amp;nbsp; protected string $model;
+&amp;nbsp; protected int $price;
+
+&amp;nbsp; public function __construct(string $brand, string $model, int $price){
+&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp; $this-&amp;gt;brand = $brand;
+&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp; $this-&amp;gt;model = $model;
+&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp; $this-&amp;gt;price = $price;
+&amp;nbsp; }
+}
+As we see, We had to repeat all the property names four times just to declare and initiate them as class ]]></summary>
+        <updated>2020-06-28T18:02:47+00:00</updated>
+    </entry>
+
+    <entry>
+        <title><![CDATA[ PHP 8.0 : CurlHandle object in curl_* functions ]]></title>
+        <link rel="alternate" href="https://phpbackend.com/blog/post/php-8-0-curlHandle-object-in-curl-functions"/>
+        <id>https://phpbackend.com/blog/post/php-8-0-curlHandle-object-in-curl-functions</id>
+        <author>
+            <name>PHP Backend</name>
+        </author>
+        <summary type="html"><![CDATA[ PHP internals are trying to slowly replace all usage of 'resource' in PHP with appropriate Object for a long time. Resources are mess in PHP. They are not actually any data type at all. Using Object instead of resource is much better approach and PHP internals are trying to achieve that. In PHP 8.0, all curl_* functions will work with CurlHandle object instance, previousely curl_* used resource instead. So, How do curl_* functions work now? Previously, curl_init() used to return resource or false: &amp;lt;?php
+$ch = curl_init();
+
+var_dump($ch);
+// resource(1) of type (curl)
+But now it returns CurlHandle Object or false: &amp;lt;?php
+$ch = curl_init();
+
+var_dump($ch);
+// ]]></summary>
+        <updated>2020-06-27T15:29:49+00:00</updated>
+    </entry>
+
+    <entry>
+        <title><![CDATA[ PHP 8.0 : Switch to Match expression ]]></title>
+        <link rel="alternate" href="https://phpbackend.com/blog/post/php-8-0-switch-to-match-expression"/>
+        <id>https://phpbackend.com/blog/post/php-8-0-switch-to-match-expression</id>
+        <author>
+            <name>PHP Backend</name>
+        </author>
+        <summary type="html"><![CDATA[ Do you use switch() often? Does long list of switches make you worried that you would introduce some bug in it and wouldn't notice because how complex and unfriendly the syntax is? Are you bothered by it type coercion behavior? Fear not. You've gotten our savior, match() expression. What is match expression? match() is an expression that allows you to compare a specific value against a series of values and then returns value based on which value matches. return value can be produced by executing function/method calls. Example: $roleType = 5;
+
+$role = match ($roleType) {
+&amp;nbsp;&amp;nbsp;&amp;nbsp; 0 =&amp;gt; 'Unauthorized',
+&amp;nbsp;&amp;nbsp;&amp;nbsp; 1 =&amp;gt; ]]></summary>
+        <updated>2020-06-26T16:27:24+00:00</updated>
+    </entry>
+
+    <entry>
+        <title><![CDATA[ PHP 8.0 : throw as an expression ]]></title>
+        <link rel="alternate" href="https://phpbackend.com/blog/post/php-8-0-throw-expression"/>
+        <id>https://phpbackend.com/blog/post/php-8-0-throw-expression</id>
+        <author>
+            <name>PHP Backend</name>
+        </author>
+        <summary type="html"><![CDATA[ In PHP, throw is a statement. It can be used in only those places where a statement is allowed. But arrow functions, coalesce operator and the ternary operators allow only expressions. So we can't throw a exceptions in below situations: &amp;lt;?php
+
+$name = $_GET['name'] ?? throw new \Exception('Name not found');
+
+$point = isset($student) ? $student-&amp;gt;point : throw new \Exception('Student not found');
+
+$closure = fn() =&amp;gt; throw new \Exception('Closure not allowed');
+ Throw is an expression now So, throw now can be used anywhere in the language where both expression is allowed. Note: Current implementation has a controversial side too. Throw now can be used ]]></summary>
+        <updated>2020-05-09T09:14:54+00:00</updated>
+    </entry>
+
+    <entry>
+        <title><![CDATA[ PHP 8.0 : str_starts_with() and str_ends_with() ]]></title>
+        <link rel="alternate" href="https://phpbackend.com/blog/post/php-8-0-str-starts-with-and-str-ends-with"/>
+        <id>https://phpbackend.com/blog/post/php-8-0-str-starts-with-and-str-ends-with</id>
+        <author>
+            <name>PHP Backend</name>
+        </author>
+        <summary type="html"><![CDATA[ Even though PHP has many helper functions to deal with strings, They still not cover all the use-cases web development requires. But good thing is, PHP internals are always coming u with their idea to make php developers life easier with string functions. God bless them. Two of such cases are: To check if $haystack string starts with $needle string.To check if $haystack string ends with $needle string. str_starts_with() &amp;lt;?php
+$haystack = 'Twinkle Twinkle Little Star';
+$needle = 'Twinkle Twin';
+
+var_dump(str_starts_with($haystack, $needle)); 
+// true
+str_ends_with() &amp;lt;?php
+$haystack = 'Twinkle Twinkle Little Star';
+$needle = 'le Star';
+
+var_dump(str_ends_with($haystack, $needle));
+// true
+Note: empty string as $needle will always return with ]]></summary>
+        <updated>2020-05-08T08:34:35+00:00</updated>
+    </entry>
+
+    <entry>
+        <title><![CDATA[ PHP 8.0 : str_contains() ]]></title>
+        <link rel="alternate" href="https://phpbackend.com/blog/post/php-8-0-str-contains"/>
+        <id>https://phpbackend.com/blog/post/php-8-0-str-contains</id>
+        <author>
+            <name>PHP Backend</name>
+        </author>
+        <summary type="html"><![CDATA[ No matter what type of project you are in, you would need to check if a substring exists in a string at some point. PHP has loads of helper functions to deal with strings. But till now, there was no direct function to check existance of a substring in another string. Currently, We rely on strpos() to do it (strstr() can be used too) &amp;lt;?php
+$string = 'Twinkle Twinkle Little Star';
+$substring = 'Star';
+
+﻿if(strpos($string, $substring) !== false){
+ // Substring exists in string
+}
+Even though this approach works, it has some drawback. Its little bit ambiguous about what strpos actually doing.Can easily introduce some ]]></summary>
+        <updated>2020-05-02T07:30:13+00:00</updated>
+    </entry>
+
+    <entry>
+        <title><![CDATA[ PHP 7.1 : What got introduced? ]]></title>
+        <link rel="alternate" href="https://phpbackend.com/blog/post/php-7-1-what-got-introduced"/>
+        <id>https://phpbackend.com/blog/post/php-7-1-what-got-introduced</id>
+        <author>
+            <name>PHP Backend</name>
+        </author>
+        <summary type="html"><![CDATA[ Nullable types Nullable type means, If a function accepts string type, by marking it nullable we can accept both string and null as valid type. To mark your type as nullable, just add a question mark (?) before your type definition. &amp;lt;?php
+
+function has_name(?string $name)
+{
+&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;// $name can be string or null
+}
+
+function return_score(): ?int&amp;nbsp;
+{
+&amp;nbsp;&amp;nbsp;&amp;nbsp;// we can return int or null here
+}
+Personal note: please avoid using nullable types as much&amp;nbsp;as you can. Null can reduce type safety if used poorly. Void return types Sometimes, we use some method to only change the object state, these functions do not need to return anything. In ]]></summary>
+        <updated>2020-01-17T05:21:57+00:00</updated>
+    </entry>
+
+    <entry>
+        <title><![CDATA[ PHP 7.2 : What got introduced? ]]></title>
+        <link rel="alternate" href="https://phpbackend.com/blog/post/php-7-2-what-got-introduced"/>
+        <id>https://phpbackend.com/blog/post/php-7-2-what-got-introduced</id>
+        <author>
+            <name>PHP Backend</name>
+        </author>
+        <summary type="html"><![CDATA[ Parameter type widening PHP till version 7.2 doesn't support parameter type variance. So we can't change type definition when overriding a method. &amp;lt;?php
+// PHP 7.1
+interface A {
+ public function call(string $name);
+}
+
+interface B extends A {
+ // we can't remove parameter type here
+ // because, A has defined parameter type as string
+ public function call($name);
+}
+// Declaration of B::call($name) must be compatible with A::call(string $name)
+But, PHP 7.2 allows us to remove type definition and accept any type of value when overriding a method. // PHP 7.2
+interface A {
+ public function call(string $name);
+}
+
+interface B extends A {
+ // this is allowed
+ public function ]]></summary>
+        <updated>2019-12-21T06:53:58+00:00</updated>
+    </entry>
+
+    <entry>
+        <title><![CDATA[ PHP 7.3 : What got introduced? ]]></title>
+        <link rel="alternate" href="https://phpbackend.com/blog/post/php-7-3-what-got-introduced"/>
+        <id>https://phpbackend.com/blog/post/php-7-3-what-got-introduced</id>
+        <author>
+            <name>PHP Backend</name>
+        </author>
+        <summary type="html"><![CDATA[ is_countable() From PHP 7.2, PHP raises warning if we use count() on uncountable variables/objects. In PHP 7.3, we got a new function is_countable() to check if the variable is countable. &amp;lt;?php
+
+$numbers = [1,2,3,4,5];
+
+$count = is_countable($numbers) ? count($numbers) : 0;
+
+print_r($count);
+// 5
+ Trailing Comma on Function Call Just like arrays, we now can use trailing comma on arguments when calling a function. $array_a = [1, 3, 5, 7, 9];
+$array_b = [2, 4, 6, 8, 0];
+
+$all_numbers = array_merge($array_a, $array_b,);
+ array_key_first() and array_key_last() Fetching first and last key of an array got easier. Previously, we needed to use combination of reset() , key(), end() ]]></summary>
+        <updated>2019-12-21T05:52:13+00:00</updated>
+    </entry>
+
+    <entry>
+        <title><![CDATA[ PHP 7.4 : Array Spread Operator ]]></title>
+        <link rel="alternate" href="https://phpbackend.com/blog/post/php-7-4-array-spread-operator"/>
+        <id>https://phpbackend.com/blog/post/php-7-4-array-spread-operator</id>
+        <author>
+            <name>PHP Backend</name>
+        </author>
+        <summary type="html"><![CDATA[ PHP already has spread operator (...) for argument unpacking. From now on, we can unpack/spread arrays too. How to unpack Arrays? Say, we have an array of odd numbers, we want to merge them with another array of even numbers. We can use spread operator to do this &amp;lt;?php
+
+$odd_numbers = [1, 3, 5, 6, 7, 9];
+
+$even_numbers = [2, 4, 6, 8];
+
+$all_numbers = [0, ... $odd_numbers, ... $even_numbers];
+
+print_r($all_numbers);
+// Array ( [0] =&amp;gt; 0 [1] =&amp;gt; 1 [2] =&amp;gt; 3 [3] =&amp;gt; 5 [4] =&amp;gt; 6 [5] =&amp;gt; 7 [6] =&amp;gt; 9 [7] =&amp;gt; 2 [8] =&amp;gt; 4 [9] =&amp;gt; 6 [10] ]]></summary>
+        <updated>2019-12-20T19:41:30+00:00</updated>
+    </entry>
+
+    <entry>
+        <title><![CDATA[ PHP 7.4 : Covariant Returns and Contravariant Parameters ]]></title>
+        <link rel="alternate" href="https://phpbackend.com/blog/post/php-7-4-covariant-returns-and-contravariant-parameters"/>
+        <id>https://phpbackend.com/blog/post/php-7-4-covariant-returns-and-contravariant-parameters</id>
+        <author>
+            <name>PHP Backend</name>
+        </author>
+        <summary type="html"><![CDATA[ Untill PHP 7.4, PHP has mostly invariant parameter types and invariant return types. With PHP 7.4, we now can declare Covariant Returns and Contravariant Parameters on interface/class definition. What is Invariant Parameter/Return Type? Invariant parameter/return type means, If a method of a super-type has defined a type on parameter/return, during overloading that method in sub-type we must define same type on parameter/return. &amp;lt;?php
+
+interface Food {
+}
+
+interface DogFood extends Food {
+}
+
+interface Dog {
+&amp;nbsp;&amp;nbsp;&amp;nbsp; public function eat(DogFood $food);
+}
+
+interface AnotherDog extends Dog {
+&amp;nbsp;&amp;nbsp;&amp;nbsp; // This is allowed
+&amp;nbsp;&amp;nbsp;&amp;nbsp; public function eat(DogFood $food);
+}
+
+interface YetAnotherDog extends Dog {
+&amp;nbsp;&amp;nbsp;&amp;nbsp; // This is not allowed, Type must be DogFood
+&amp;nbsp;&amp;nbsp;&amp;nbsp; ]]></summary>
+        <updated>2019-12-20T18:26:08+00:00</updated>
+    </entry>
+
+    <entry>
+        <title><![CDATA[ PHP 7.4 : Null Coalescing Assignment Operator ]]></title>
+        <link rel="alternate" href="https://phpbackend.com/blog/post/php-7-4-null-coalescing-assignment-operator"/>
+        <id>https://phpbackend.com/blog/post/php-7-4-null-coalescing-assignment-operator</id>
+        <author>
+            <name>PHP Backend</name>
+        </author>
+        <summary type="html"><![CDATA[ In PHP 7.0, we got new null coalescing operator (??) which is a syntactic sugar of using isset() for check a value for null. PHP 7.4 has brought new&amp;nbsp;syntactic sugar to assign default value to a variable if it is null. Lets say, we have a variable called $student_name which should contain student name in it. But for some reason, sometimes student name may can't be found (null value), so we need to assign default value to it before using it. In PHP &amp;lt;7.4 , we would do something like this: &amp;lt;?php
+
+$student_name = null;
+
+$student_name = $student_name ?? 'Default Name';
+
+var_dump($student_name);
+// string(12) ]]></summary>
+        <updated>2019-12-20T10:25:00+00:00</updated>
+    </entry>
+
+    <entry>
+        <title><![CDATA[ PHP 7.4 : Arrow Functions ]]></title>
+        <link rel="alternate" href="https://phpbackend.com/blog/post/php-7-4-arrow-functions"/>
+        <id>https://phpbackend.com/blog/post/php-7-4-arrow-functions</id>
+        <author>
+            <name>PHP Backend</name>
+        </author>
+        <summary type="html"><![CDATA[ Full Disclosure: I don't like Arrow Functions (yet). But there are many things I don't like in PHP but still use everday. So Let there be another one. What the heck is Arrow Functions? You have used Anonymous functions, also known as closures, right? Arrow Functions are just synthetic sugar for it. Example: To filter array based on custom logic, currently we pass a anonymous function to it like this &amp;lt;?php
+
+$array_with_string_and_int = ['a', 6, 'h', 30, 'z', 'm', 70];
+
+$array_with_only_int = array_filter($array_with_string_and_int,
+ function($value){
+ return is_int($value);
+ });
+
+print_r($array_with_only_int);
+
+// Array ( [1] =&amp;gt; 6 [3] =&amp;gt; 30 [6] =&amp;gt; 70 )
+With Arrow Function, we ]]></summary>
+        <updated>2019-12-18T19:18:46+00:00</updated>
+    </entry>
+
+    <entry>
+        <title><![CDATA[ PHP 7.4 : Typed Properties ]]></title>
+        <link rel="alternate" href="https://phpbackend.com/blog/post/php-7-4-typed-properties"/>
+        <id>https://phpbackend.com/blog/post/php-7-4-typed-properties</id>
+        <author>
+            <name>PHP Backend</name>
+        </author>
+        <summary type="html"><![CDATA[ Scalar types &amp;amp; return types are one of the killer improvements of PHP 7 era. By defining what our functions/methods accept and return, we can write more reasonable code while avoiding edge-cases of unexpected data type. In PHP 7.4, type system became more powerful with &quot;Typed Properties&quot;. As almost all the modern PHP Frameworks now follow Object Oriented Paradigm, all of them now will be able to armor themselves as &quot;strict manner&quot;. What is Property Types and How to use them? consider below class &amp;lt;?php
+declare(strict_types=1);
+
+class Student {
+ public $name;
+ public $score;
+}
+Here we have a class &quot;Student&quot; With only two property. ]]></summary>
+        <updated>2019-12-16T18:23:15+00:00</updated>
+    </entry>
+
+    <entry>
+        <title><![CDATA[ Getting Started with PHP 7.4 ]]></title>
+        <link rel="alternate" href="https://phpbackend.com/blog/post/getting-started-with-php-7-4"/>
+        <id>https://phpbackend.com/blog/post/getting-started-with-php-7-4</id>
+        <author>
+            <name>PHP Backend</name>
+        </author>
+        <summary type="html"><![CDATA[ Yes, another member has been added to PHP7 family. Okay but, That title has betrayed you. This post is not like a tutorial or guideline for you to start using PHP 7.4. This post is to let you know that I am starting this blog with topics about PHP 7.4. Next few blog post will try to inform you about some of the key points of new PHP version. PHP 7 Man, What an awesome release PHP 7 was. Just when PHP was dying (debatable), PHP Next Generation AKA PHP 7 came and rescued us. With lots of new implementations ]]></summary>
+        <updated>2019-12-14T17:32:45+00:00</updated>
+    </entry>
+
+</feed>

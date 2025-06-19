@@ -1,0 +1,360 @@
+<!doctype html>
+<html lang="en">
+    
+<!-- Mirrored from phpbackend.com/blog/post/php-8-0-curlHandle-object-in-curl-functions by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 19 Jun 2025 04:35:29 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
+<head>
+        <base >
+        <meta charset="UTF-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+
+        <!-- meta area -->
+                <title>PHP 8.0 : CurlHandle object in curl_* functions :: PHP Backend Related discussions at PHPBackend.com</title>
+        <meta name="keywords" content="PHP 8.0 : CurlHandle object in curl_* functions, php, backend, php backend, php 7, php 8, whats new in php 8, programming, web development, software, tutorial, blog" />
+        <meta name="description" content="PHP internals are trying to slowly replace all usage of &apos;resource&apos; in PHP with appropriate Object for a long time. Resources are mess in PHP. They are not actually any" />
+        <meta name="robots" content="index, follow" />
+                <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"> 
+
+        <link rel="dns-prefetch" href="https://cdnjs.cloudflare.com/">
+        <link rel="preload" href="../../assets/icomoon/style.css" as="style" />
+
+        <!-- stylesheet -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/css/bootstrap.min.css">
+        
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.10/styles/github.min.css" />
+
+        <link rel="stylesheet" href="../../assets/icomoon/style.css">
+
+        <style>
+            /*Default*/
+            pre {
+                display: block;
+                overflow-x: auto;
+                padding: .8em;
+                color: #333;
+                background: #f8f8f8;
+                font-size: medium;
+            }
+
+            body {
+                background-color: #fefefe;
+            }
+
+            a {
+                color: #343a40;
+            }
+
+            .article .body a {
+                text-decoration: underline;
+            }
+
+            blockquote {
+                background: #f9f9f9;
+                border-left: 10px solid #ccc;
+                margin: 1.5em 10px;
+                padding: 0.5em 10px;
+                quotes: "\201C""\201D""\2018""\2019";
+            }
+            blockquote:before {
+                color: #ccc;
+                content: open-quote;
+                font-size: 4em;
+                line-height: 0.1em;
+                margin-right: 0.25em;
+                vertical-align: -0.4em;
+            }
+            blockquote:after {
+                color: #ccc;
+                content: close-quote;
+                font-size: 4em;
+                line-height: 0.1em;
+                margin-left: 0.25em;
+                vertical-align: -0.4em;
+            }
+            blockquote p {
+                display: inline;
+            }
+
+            .article {
+                margin:15px;
+                padding: 15px;
+                /*border: 1px solid #b0b0b0;*/
+                background-color: white;
+                font-size: 1.3em;
+            }
+
+            .article .title {
+                color: #343a40;
+                font-size: 1.5em;
+                font-weight: bold;
+                margin-bottom: 0.5em;
+            }
+
+            .article .title a {
+                color: #343a40;
+            }
+            .article .meta {
+                font-size: 0.7em;
+                margin-bottom: 0.3em;
+            }
+
+            .article .slurp {
+                font-size: 0.8em;
+                font-weight: normal;
+                color: #6B6B6B;
+            }
+            .article .body {
+                margin-top: 1.2em;
+            }
+            .article .body p {
+                margin-bottom: 0.7em;
+            }
+
+            footer {
+                color: white;
+                background-color: #343a40;
+                padding: 1em;
+            }
+
+            footer a, footer a:hover {
+                color: #ffffff;
+            }
+
+            .copyright {
+                text-align: center;
+            }
+
+            @media (max-width: 800px) {
+                .article {
+                    margin-left: -10px;
+                    margin-right: -10px;
+                    margin-top: 5px;
+                    margin-bottom: 5px;
+                    font-size: 1em;
+                }
+
+                .article .title {
+                    font-size: 1.3em;
+                }
+            }
+        </style>
+
+                <meta property="og:title" content="PHP 8.0 : CurlHandle object in curl_* functions :: PHP Backend Related discussions at PHPBackend.com" />
+        <meta property="og:site_name" content="PHPBackend.com" />
+        <meta property="og:description" content="Welcome to world of PHP, the most laughed at language on the internet. Here at PHPBackend, we discuss about new php versions, tips & tricks, tutorials and rants." />
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content="https://phpbackend.com/blog/post/php-8-0-curlHandle-object-in-curl-functions" />
+        <meta property="og:image" content="https://phpbackend.com/images/phpbackend-og.jpg" />
+        <meta property="og:image:width" content="600" />
+        <meta property="og:image:height" content="450" />
+            </head><body>
+    <div class="bg-dark" id="navbarHeader">
+        <div class="container">
+            <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+                <a class="navbar-brand" href="../../index.html">&lt;?php Backend.com</a>
+<!--                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNavDropdown">
+                    <ul class="navbar-nav ml-auto">
+                    </ul>
+                </div>-->
+            </nav>
+        </div>
+    </div><div class="container">
+    <div class="row">
+        <div class="col-sm-10">
+                            <div class="article">
+                    <div class="title">
+                        PHP 8.0 : CurlHandle object in curl_* functions                    </div>
+                    <div class="meta">
+                        <i class="icon-calendar"></i> 27, June 2020                    </div>
+                    <hr>
+                    <div class="body">
+                        <p>PHP internals are trying to slowly replace all usage of 'resource' in PHP with appropriate Object for a long time. Resources are mess in PHP. They are not actually any data type at all. Using Object instead of resource is much better approach and PHP internals are trying to achieve that.</p><p>In PHP 8.0, all curl_* functions will work with <strong style="color: rgb(240, 102, 102);">CurlHandle</strong> object instance, previousely curl_* used resource instead.</p><p><br></p><p><strong>So, How do curl_* functions work now?</strong></p><p>Previously, <strong style="color: rgb(240, 102, 102);">curl_init()</strong><span style="color: rgb(240, 102, 102);"> </span>used to return resource or false:</p><pre class="ql-syntax" spellcheck="false"><span class="hljs-meta">&lt;?php</span>
+$ch = curl_init();
+
+var_dump($ch);
+<span class="hljs-comment">//  resource(1) of type (curl)</span>
+</pre><p>But now it returns CurlHandle Object or false:</p><pre class="ql-syntax" spellcheck="false"><span class="hljs-meta">&lt;?php</span>
+$ch = curl_init();
+
+var_dump($ch);
+<span class="hljs-comment">// object(CurlHandle)#1 (0) {}</span>
+</pre><p>Note: <strong style="color: rgb(240, 102, 102);">curl_multi_init()</strong> now returns <strong style="color: rgb(240, 102, 102);">CurlMultiHandle</strong> object. Similarly <strong style="color: rgb(240, 102, 102);">curl_share_init()</strong><strong> </strong>now returns <strong style="color: rgb(240, 102, 102);">CurlShareHandle</strong> object.</p><p><br></p><p>After init, every other function works like before, they just accept an object as handler now:</p><pre class="ql-syntax" spellcheck="false">$ch = curl_init();
+<span class="hljs-comment">// $ch is now a object of CurlHandle</span>
+﻿
+curl_setopt($ch, CURLOPT_URL, <span class="hljs-string">"example.com"</span>);
+<span class="hljs-comment">// curl_setopt accepts CurlHandle object instance as first parameter</span>
+
+curl_setopt($ch, CURLOPT_RETURNTRANSFER, <span class="hljs-number">1</span>);
+
+<span class="hljs-comment">// same, curl_exec now accepts CurlHandle object instance</span>
+$output = curl_exec($ch);
+</pre><p>As we see, we don't need to change our code for this new change.</p><p><strong>So, Our previous code will run fine?</strong></p><p>It should. But be carefull if you are using <strong>is_resource()</strong> to verify curl_init() return. As curl_init() does not return resource anymore, is_resource() will not work on it. If you want to check if curl_init() return value is valid, check if it is false, because curl_init returns false on failure.</p><pre class="ql-syntax" spellcheck="false">$handle = curl_init();
+
+<span class="hljs-keyword">if</span> (!\is_resource($handle)) {
+  <span class="hljs-comment">// this will not work anymore </span>
+  ﻿<span class="hljs-comment">//don't do this </span>
+}﻿
+
+<span class="hljs-keyword">if</span> (﻿$handle === <span class="hljs-keyword">false</span>) {
+ <span class="hljs-comment">// if $handle is false that means curl_init failed</span>
+ throw_or_log_this_error()
+}
+
+<span class="hljs-comment">// $handle is valid here</span>
+</pre><p><strong>How will we close curl or free the resource?</strong></p><p>curl_close() does not close the resource any more. duh, there is no resource to close. As curl_* now works with object, and just like any other object, PHP close/frees them when there are no reference left to them or at end of the script execution.</p><p>So, generally you are not required to call curl_close() anymore.</p><p><strong>But, I want to close curl manually</strong></p><p>If you want to close curl manually for some reason, you can simply unset them.</p><pre class="ql-syntax" spellcheck="false">$curl = curl_init();
+<span class="hljs-comment">// we will use it here</span>
+curl_close($curl); <span class="hljs-comment">// not needed anymore</span>
+<span class="hljs-keyword">unset</span>($curl); <span class="hljs-comment">// CurlHandle object destroyed</span>
+</pre><p><br></p><p>Reference: <a href="https://github.com/php/php-src/pull/5402﻿" target="_blank">https://github.com/php/php-src/pull/5402﻿</a></p>                    </div>
+                </div>
+                            <div class="row">                    <div class="col-sm-6">
+                        <div class="article">
+                            <b>
+                                <a href="php-8-0-switch-to-match-expression.html">PHP 8.0 : Switch to Match expression</a>
+                            </b>
+                        </div>
+                    </div>
+                                        <div class="col-sm-6">
+                        <div class="article">
+                            <b>
+                                <a href="php-8-0-class-constructor-property-promotion.html">PHP 8.0 : Class constructor property promotion</a>
+                            </b>
+                        </div>
+                    </div>
+                    </div>
+<style>
+.comments .comment_header {
+    display: flex;
+    justify-content: space-between;
+    border-bottom: 1px solid #eee;
+    padding: 15px 0;
+    margin-bottom: 10px;
+    align-items: center;
+}
+.comments .comment_header .total {
+    color: #777777;
+    font-size: 14px;
+}
+.comments .comment_header .write_comment_btn {
+    margin: 0;
+}
+.comments .write_comment_btn, .comments .write_comment button {
+    display: inline-block;
+    background-color: #565656;
+    color: #fff;
+    text-decoration: none;
+    margin: 10px 0 0 0;
+    padding: 5px 15px;
+    border-radius: 5px;
+    font-size: 14px;
+    font-weight: 600;
+    border: 0;
+}
+.comments .write_comment_btn:hover, .comments .write_comment button:hover {
+    background-color: #636363;
+}
+.comments .write_comment {
+    padding: 20px 0 10px 0;
+}
+.comments .write_comment textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    height: 150px;
+    margin-top: 10px;
+}
+.comments .write_comment input {
+    display: block;
+    width: 250px;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    margin-top: 10px;
+}
+.comments .write_comment button {
+    cursor: pointer;
+}
+.comments .comment {
+    padding-top: 10px;
+}
+.comments .comment .name {
+    display: inline;
+    padding: 0 5px 3px 0;
+    margin: 0;
+    font-size: 16px;
+    color: #555555;
+}
+.comments .comment .date {
+    color: #888888;
+    font-size: 14px;
+}
+.comments .comment .content {
+    padding: 5px 0 5px 0;
+}
+.comments .comment .reply_comment_btn {
+    display: inline-block;
+    text-decoration: none;
+    margin-bottom: 10px;
+    font-size: 14px;
+    color: #888888;
+}
+.comments .comment .replies {
+    padding-left: 30px;
+}
+</style>
+
+<div class="comments">
+   <hr>
+    <h2>Write comment about this article:</h2>
+
+    <div class="write_comment">
+        <form>
+            <input name="website" type="text" value="http://" style="display: none;">
+	    <input name="url" type="text" value="" style="display: none;">
+
+	    <input name="name" type="text" placeholder="Your Name" required>
+            <textarea name="content" placeholder="Write your comment here..." required></textarea>
+            <button type="submit">Submit Comment</button>
+        </form>
+    </div>
+
+</div>
+
+<script>
+
+document.querySelector("input[name='url']").value = window.location.href;
+
+const comments_page_id = 1; // This number should be unique on every page
+
+document.querySelectorAll(".comments .write_comment form").forEach(element => {
+		element.onsubmit = event => {
+			event.preventDefault();
+			fetch("../../post-comment.html", {
+				method: 'POST',
+				body: new FormData(element)
+			}).then(response => response.text()).then(data => {
+				element.parentElement.innerHTML = data;
+			});
+		};
+	});
+</script>
+
+        </div>
+    </div>
+</div>
+<footer>
+    <div class="" style="text-align: center; margin-bottom: 10px;">
+        <a href="../../rss.xml">Rss Feed</a>
+    </div>
+    <div class="copyright">
+        <a href="../../index.html">&lt;?php Backend.com</a>
+    </div>
+</footer>    </body>
+
+<!-- Mirrored from phpbackend.com/blog/post/php-8-0-curlHandle-object-in-curl-functions by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 19 Jun 2025 04:35:29 GMT -->
+</html>

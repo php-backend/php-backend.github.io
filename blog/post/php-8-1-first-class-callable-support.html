@@ -1,0 +1,386 @@
+<!doctype html>
+<html lang="en">
+    
+<!-- Mirrored from phpbackend.com/blog/post/php-8-1-first-class-callable-support by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 19 Jun 2025 04:34:52 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
+<head>
+        <base >
+        <meta charset="UTF-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+
+        <!-- meta area -->
+                <title>PHP 8.1 : First Class Callable support :: PHP Backend Related discussions at PHPBackend.com</title>
+        <meta name="keywords" content="PHP 8.1 : First Class Callable support, php, backend, php backend, php 7, php 8, whats new in php 8, programming, web development, software, tutorial, blog" />
+        <meta name="description" content="In PHP, some functions (such as call_user_func() or usort()) accept user defined functions known as callbacks. While in modern versions, php ecosystem has moved to a better alternatives called closure," />
+        <meta name="robots" content="index, follow" />
+                <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"> 
+
+        <link rel="dns-prefetch" href="https://cdnjs.cloudflare.com/">
+        <link rel="preload" href="../../assets/icomoon/style.css" as="style" />
+
+        <!-- stylesheet -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/css/bootstrap.min.css">
+        
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.10/styles/github.min.css" />
+
+        <link rel="stylesheet" href="../../assets/icomoon/style.css">
+
+        <style>
+            /*Default*/
+            pre {
+                display: block;
+                overflow-x: auto;
+                padding: .8em;
+                color: #333;
+                background: #f8f8f8;
+                font-size: medium;
+            }
+
+            body {
+                background-color: #fefefe;
+            }
+
+            a {
+                color: #343a40;
+            }
+
+            .article .body a {
+                text-decoration: underline;
+            }
+
+            blockquote {
+                background: #f9f9f9;
+                border-left: 10px solid #ccc;
+                margin: 1.5em 10px;
+                padding: 0.5em 10px;
+                quotes: "\201C""\201D""\2018""\2019";
+            }
+            blockquote:before {
+                color: #ccc;
+                content: open-quote;
+                font-size: 4em;
+                line-height: 0.1em;
+                margin-right: 0.25em;
+                vertical-align: -0.4em;
+            }
+            blockquote:after {
+                color: #ccc;
+                content: close-quote;
+                font-size: 4em;
+                line-height: 0.1em;
+                margin-left: 0.25em;
+                vertical-align: -0.4em;
+            }
+            blockquote p {
+                display: inline;
+            }
+
+            .article {
+                margin:15px;
+                padding: 15px;
+                /*border: 1px solid #b0b0b0;*/
+                background-color: white;
+                font-size: 1.3em;
+            }
+
+            .article .title {
+                color: #343a40;
+                font-size: 1.5em;
+                font-weight: bold;
+                margin-bottom: 0.5em;
+            }
+
+            .article .title a {
+                color: #343a40;
+            }
+            .article .meta {
+                font-size: 0.7em;
+                margin-bottom: 0.3em;
+            }
+
+            .article .slurp {
+                font-size: 0.8em;
+                font-weight: normal;
+                color: #6B6B6B;
+            }
+            .article .body {
+                margin-top: 1.2em;
+            }
+            .article .body p {
+                margin-bottom: 0.7em;
+            }
+
+            footer {
+                color: white;
+                background-color: #343a40;
+                padding: 1em;
+            }
+
+            footer a, footer a:hover {
+                color: #ffffff;
+            }
+
+            .copyright {
+                text-align: center;
+            }
+
+            @media (max-width: 800px) {
+                .article {
+                    margin-left: -10px;
+                    margin-right: -10px;
+                    margin-top: 5px;
+                    margin-bottom: 5px;
+                    font-size: 1em;
+                }
+
+                .article .title {
+                    font-size: 1.3em;
+                }
+            }
+        </style>
+
+                <meta property="og:title" content="PHP 8.1 : First Class Callable support :: PHP Backend Related discussions at PHPBackend.com" />
+        <meta property="og:site_name" content="PHPBackend.com" />
+        <meta property="og:description" content="Welcome to world of PHP, the most laughed at language on the internet. Here at PHPBackend, we discuss about new php versions, tips & tricks, tutorials and rants." />
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content="https://phpbackend.com/blog/post/php-8-1-first-class-callable-support" />
+        <meta property="og:image" content="https://phpbackend.com/images/phpbackend-og.jpg" />
+        <meta property="og:image:width" content="600" />
+        <meta property="og:image:height" content="450" />
+            </head><body>
+    <div class="bg-dark" id="navbarHeader">
+        <div class="container">
+            <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+                <a class="navbar-brand" href="../../index.html">&lt;?php Backend.com</a>
+<!--                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNavDropdown">
+                    <ul class="navbar-nav ml-auto">
+                    </ul>
+                </div>-->
+            </nav>
+        </div>
+    </div><div class="container">
+    <div class="row">
+        <div class="col-sm-10">
+                            <div class="article">
+                    <div class="title">
+                        PHP 8.1 : First Class Callable support                    </div>
+                    <div class="meta">
+                        <i class="icon-calendar"></i> 05, November 2022                    </div>
+                    <hr>
+                    <div class="body">
+                        <p>In PHP, some functions (such as call_user_func() or usort()) accept user defined functions known as callbacks. While in modern versions, php ecosystem has moved to a better alternatives called closure, callback is still supported.</p><p>But callbacks are kinda ugly. Here is the examples:</p><pre class="ql-syntax" spellcheck="false"><span class="hljs-comment">// functions as callback</span>
+<span class="hljs-function">echo <span class="hljs-title">call_user_func</span>﻿(<span class="hljs-params"><span class="hljs-string">'strlen'</span>, <span class="hljs-string">'hello world'</span></span>)</span>;
+<span class="hljs-comment">// 11</span>
+
+<span class="hljs-comment">// class methods as callback</span>
+<span class="hljs-function">echo <span class="hljs-title">call_user_func</span>(<span class="hljs-params">[$<span class="hljs-keyword">this</span>, <span class="hljs-string">'methodName'</span>]</span>)</span>;﻿ 
+</pre><p>As we can see, callables can be stated as string or array. Which is kinda confusing when reading code and finding function usage is much harder.</p><p><br></p><p>However, we can convert callable to closure (which is always better) but that doesn't solve the issue much.</p><pre class="ql-syntax" spellcheck="false">$closure = Closure::fromCallable(<span class="hljs-string">'strlen'</span>); <span class="hljs-comment">// now we have a closure</span>
+<span class="hljs-comment">// or</span>
+$closure = Closure::fromCallable(<span class="hljs-keyword">$this</span>, <span class="hljs-string">'methodName'</span>);
+</pre><p><br></p><p>PHP 8.1 adds first class callable support in the language. Now we can convert callables into closure in more elegant way.</p><p>The syntax looks as if we are calling the function/method, but in place of argument, we are using three dots (...)</p><pre class="ql-syntax" spellcheck="false"> <span class="hljs-comment">// we are not calling the strlen method, just converting to closure</span>
+$closure = strlen(...);
+
+<span class="hljs-comment">// now we can call the closure</span>
+$closure(<span class="hljs-string">'something'</span>); <span class="hljs-comment">// 9</span>
+
+
+<span class="hljs-comment">// we can call class method too</span>
+$closure = $object-&gt;methodName(...);
+
+$closure(<span class="hljs-string">'some argument'</span>); <span class="hljs-comment">// works</span>
+</pre><p><br></p><p><strong>﻿What are the three dots doing there?</strong></p><p>The three dots are just placeholder for the arguments that the original function/method has. This allows us to convert a function to closure without redefining their arguments again.</p><pre class="ql-syntax" spellcheck="false"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">funcWithOneArgument</span><span class="hljs-params">($argOne)</span> 
+﻿</span>{
+    <span class="hljs-keyword">echo</span> <span class="hljs-string">'got one'</span>;
+}
+
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">funcWithTwoArgument</span><span class="hljs-params">($argOne, $argTwo)</span> 
+﻿</span>{
+    <span class="hljs-keyword">echo</span> <span class="hljs-string">'got two'</span>;
+}
+
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">funcWithThreeArgument</span><span class="hljs-params">($argOne, $argTwo, $argThree)</span> 
+﻿</span>{
+    <span class="hljs-keyword">echo</span> <span class="hljs-string">'got three'</span>;
+}
+
+$closure1 = funcWithOneArgument(...); <span class="hljs-comment">// again, not calling the function, just converting to closure</span>
+$closure2 = funcWithTwoArgument(...);
+$closure3 = funcWithThreeArgument(...);
+
+<span class="hljs-comment">// notice how we have closures, without defining any arguments</span>
+
+<span class="hljs-comment">// time to execute the closures</span>
+$closure1(<span class="hljs-string">'arg1'</span>); <span class="hljs-comment">// since $closure1 is converted from funcWithOneArgument, it accepts only one argument</span>
+
+$closure2(<span class="hljs-string">'arg1'</span>, <span class="hljs-string">'arg2'</span>); <span class="hljs-comment">// got two</span>
+
+﻿$closure3(<span class="hljs-string">'arg1'</span>, <span class="hljs-string">'arg2'</span>, <span class="hljs-string">'arg3'</span>); <span class="hljs-comment">// got two</span>
+﻿
+<span class="hljs-comment">// what if we don't pass all arguments?</span>
+$closure3(<span class="hljs-string">'arg1'</span>, <span class="hljs-string">'arg2'</span>);
+<span class="hljs-comment">// PHP Fatal error:&nbsp; Uncaught ArgumentCountError: Too few arguments to function funcWithThreeArgument(), 2 passed and exactly 3 expected</span>
+</pre><p><br></p><p>There are multiple syntax variety for first class callable. All of the bellow syntaxt is supported:</p><pre class="ql-syntax" spellcheck="false">﻿strlen(...);
+$closure(...);
+$invokableObject(...);
+$obj-&gt;method(...);
+$obj-&gt;$methodStr(...);
+($obj-&gt;property)(...);
+Foo::method(...);
+$classStr::$methodStr(...);
+self::{$complex . $expression}(...);
+'strlen'(...);
+[<span class="hljs-string">$obj, 'method'</span>](<span class="hljs-link">...</span>);
+[<span class="hljs-string">Foo::class, 'method'</span>](<span class="hljs-link">...</span>);
+</pre><p><br></p><p>RFC: <a href="https://wiki.php.net/rfc/first_class_callable_syntax" target="_blank">https://wiki.php.net/rfc/first_class_callable_syntax</a></p>                    </div>
+                </div>
+                            <div class="row">                    <div class="col-sm-6">
+                        <div class="article">
+                            <b>
+                                <a href="php-8-1-pure-intersection-types.html">PHP 8.1 : Pure intersection types</a>
+                            </b>
+                        </div>
+                    </div>
+                                        <div class="col-sm-6">
+                        <div class="article">
+                            <b>
+                                <a href="what-is-new-in-php-8-2.html">What is new in PHP 8.2</a>
+                            </b>
+                        </div>
+                    </div>
+                    </div>
+<style>
+.comments .comment_header {
+    display: flex;
+    justify-content: space-between;
+    border-bottom: 1px solid #eee;
+    padding: 15px 0;
+    margin-bottom: 10px;
+    align-items: center;
+}
+.comments .comment_header .total {
+    color: #777777;
+    font-size: 14px;
+}
+.comments .comment_header .write_comment_btn {
+    margin: 0;
+}
+.comments .write_comment_btn, .comments .write_comment button {
+    display: inline-block;
+    background-color: #565656;
+    color: #fff;
+    text-decoration: none;
+    margin: 10px 0 0 0;
+    padding: 5px 15px;
+    border-radius: 5px;
+    font-size: 14px;
+    font-weight: 600;
+    border: 0;
+}
+.comments .write_comment_btn:hover, .comments .write_comment button:hover {
+    background-color: #636363;
+}
+.comments .write_comment {
+    padding: 20px 0 10px 0;
+}
+.comments .write_comment textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    height: 150px;
+    margin-top: 10px;
+}
+.comments .write_comment input {
+    display: block;
+    width: 250px;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    margin-top: 10px;
+}
+.comments .write_comment button {
+    cursor: pointer;
+}
+.comments .comment {
+    padding-top: 10px;
+}
+.comments .comment .name {
+    display: inline;
+    padding: 0 5px 3px 0;
+    margin: 0;
+    font-size: 16px;
+    color: #555555;
+}
+.comments .comment .date {
+    color: #888888;
+    font-size: 14px;
+}
+.comments .comment .content {
+    padding: 5px 0 5px 0;
+}
+.comments .comment .reply_comment_btn {
+    display: inline-block;
+    text-decoration: none;
+    margin-bottom: 10px;
+    font-size: 14px;
+    color: #888888;
+}
+.comments .comment .replies {
+    padding-left: 30px;
+}
+</style>
+
+<div class="comments">
+   <hr>
+    <h2>Write comment about this article:</h2>
+
+    <div class="write_comment">
+        <form>
+            <input name="website" type="text" value="http://" style="display: none;">
+	    <input name="url" type="text" value="" style="display: none;">
+
+	    <input name="name" type="text" placeholder="Your Name" required>
+            <textarea name="content" placeholder="Write your comment here..." required></textarea>
+            <button type="submit">Submit Comment</button>
+        </form>
+    </div>
+
+</div>
+
+<script>
+
+document.querySelector("input[name='url']").value = window.location.href;
+
+const comments_page_id = 1; // This number should be unique on every page
+
+document.querySelectorAll(".comments .write_comment form").forEach(element => {
+		element.onsubmit = event => {
+			event.preventDefault();
+			fetch("../../post-comment.html", {
+				method: 'POST',
+				body: new FormData(element)
+			}).then(response => response.text()).then(data => {
+				element.parentElement.innerHTML = data;
+			});
+		};
+	});
+</script>
+
+        </div>
+    </div>
+</div>
+<footer>
+    <div class="" style="text-align: center; margin-bottom: 10px;">
+        <a href="../../rss.xml">Rss Feed</a>
+    </div>
+    <div class="copyright">
+        <a href="../../index.html">&lt;?php Backend.com</a>
+    </div>
+</footer>    </body>
+
+<!-- Mirrored from phpbackend.com/blog/post/php-8-1-first-class-callable-support by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 19 Jun 2025 04:34:52 GMT -->
+</html>

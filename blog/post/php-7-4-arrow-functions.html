@@ -1,0 +1,379 @@
+<!doctype html>
+<html lang="en">
+    
+<!-- Mirrored from phpbackend.com/blog/post/php-7-4-arrow-functions by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 19 Jun 2025 04:35:29 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
+<head>
+        <base >
+        <meta charset="UTF-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+
+        <!-- meta area -->
+                <title>PHP 7.4 : Arrow Functions :: PHP Backend Related discussions at PHPBackend.com</title>
+        <meta name="keywords" content="PHP 7.4 : Arrow Functions, php, backend, php backend, php 7, php 8, whats new in php 8, programming, web development, software, tutorial, blog" />
+        <meta name="description" content="Full Disclosure: I don&apos;t like Arrow Functions (yet). But there are many things I don&apos;t like in PHP but still use everday. So Let there be another one. What the" />
+        <meta name="robots" content="index, follow" />
+                <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"> 
+
+        <link rel="dns-prefetch" href="https://cdnjs.cloudflare.com/">
+        <link rel="preload" href="../../assets/icomoon/style.css" as="style" />
+
+        <!-- stylesheet -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/css/bootstrap.min.css">
+        
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.10/styles/github.min.css" />
+
+        <link rel="stylesheet" href="../../assets/icomoon/style.css">
+
+        <style>
+            /*Default*/
+            pre {
+                display: block;
+                overflow-x: auto;
+                padding: .8em;
+                color: #333;
+                background: #f8f8f8;
+                font-size: medium;
+            }
+
+            body {
+                background-color: #fefefe;
+            }
+
+            a {
+                color: #343a40;
+            }
+
+            .article .body a {
+                text-decoration: underline;
+            }
+
+            blockquote {
+                background: #f9f9f9;
+                border-left: 10px solid #ccc;
+                margin: 1.5em 10px;
+                padding: 0.5em 10px;
+                quotes: "\201C""\201D""\2018""\2019";
+            }
+            blockquote:before {
+                color: #ccc;
+                content: open-quote;
+                font-size: 4em;
+                line-height: 0.1em;
+                margin-right: 0.25em;
+                vertical-align: -0.4em;
+            }
+            blockquote:after {
+                color: #ccc;
+                content: close-quote;
+                font-size: 4em;
+                line-height: 0.1em;
+                margin-left: 0.25em;
+                vertical-align: -0.4em;
+            }
+            blockquote p {
+                display: inline;
+            }
+
+            .article {
+                margin:15px;
+                padding: 15px;
+                /*border: 1px solid #b0b0b0;*/
+                background-color: white;
+                font-size: 1.3em;
+            }
+
+            .article .title {
+                color: #343a40;
+                font-size: 1.5em;
+                font-weight: bold;
+                margin-bottom: 0.5em;
+            }
+
+            .article .title a {
+                color: #343a40;
+            }
+            .article .meta {
+                font-size: 0.7em;
+                margin-bottom: 0.3em;
+            }
+
+            .article .slurp {
+                font-size: 0.8em;
+                font-weight: normal;
+                color: #6B6B6B;
+            }
+            .article .body {
+                margin-top: 1.2em;
+            }
+            .article .body p {
+                margin-bottom: 0.7em;
+            }
+
+            footer {
+                color: white;
+                background-color: #343a40;
+                padding: 1em;
+            }
+
+            footer a, footer a:hover {
+                color: #ffffff;
+            }
+
+            .copyright {
+                text-align: center;
+            }
+
+            @media (max-width: 800px) {
+                .article {
+                    margin-left: -10px;
+                    margin-right: -10px;
+                    margin-top: 5px;
+                    margin-bottom: 5px;
+                    font-size: 1em;
+                }
+
+                .article .title {
+                    font-size: 1.3em;
+                }
+            }
+        </style>
+
+                <meta property="og:title" content="PHP 7.4 : Arrow Functions :: PHP Backend Related discussions at PHPBackend.com" />
+        <meta property="og:site_name" content="PHPBackend.com" />
+        <meta property="og:description" content="Welcome to world of PHP, the most laughed at language on the internet. Here at PHPBackend, we discuss about new php versions, tips & tricks, tutorials and rants." />
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content="https://phpbackend.com/blog/post/php-7-4-arrow-functions" />
+        <meta property="og:image" content="https://phpbackend.com/images/phpbackend-og.jpg" />
+        <meta property="og:image:width" content="600" />
+        <meta property="og:image:height" content="450" />
+            </head><body>
+    <div class="bg-dark" id="navbarHeader">
+        <div class="container">
+            <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+                <a class="navbar-brand" href="../../index.html">&lt;?php Backend.com</a>
+<!--                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNavDropdown">
+                    <ul class="navbar-nav ml-auto">
+                    </ul>
+                </div>-->
+            </nav>
+        </div>
+    </div><div class="container">
+    <div class="row">
+        <div class="col-sm-10">
+                            <div class="article">
+                    <div class="title">
+                        PHP 7.4 : Arrow Functions                    </div>
+                    <div class="meta">
+                        <i class="icon-calendar"></i> 18, December 2019                    </div>
+                    <hr>
+                    <div class="body">
+                        <p>Full Disclosure: I don't like Arrow Functions (yet). But there are many things I don't like in PHP but still use everday. So Let there be another one.</p><p><br></p><p><strong>What the heck is Arrow Functions?</strong></p><p>You have used Anonymous functions, also known as <em>closures</em>, right? Arrow Functions are just synthetic sugar for it.</p><p>Example: To filter array based on custom logic, currently we pass a anonymous function to it like this</p><pre class="ql-syntax" spellcheck="false"><span class="hljs-meta">&lt;?php</span>
+
+$array_with_string_and_int = [<span class="hljs-string">'a'</span>, <span class="hljs-number">6</span>, <span class="hljs-string">'h'</span>, <span class="hljs-number">30</span>, <span class="hljs-string">'z'</span>, <span class="hljs-string">'m'</span>, <span class="hljs-number">70</span>];
+
+$array_with_only_int = array_filter($array_with_string_and_int,
+                                    <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">($value)</span></span>{
+                                        <span class="hljs-keyword">return</span> is_int($value);
+                                     });
+
+print_r($array_with_only_int);
+
+<span class="hljs-comment">// Array ( [1] =&gt; 6 [3] =&gt; 30 [6] =&gt; 70 )</span>
+</pre><p>With Arrow Function, we can write same thing in shorter manner. We don''t even need to write return keyword.</p><pre class="ql-syntax" spellcheck="false"><span class="hljs-meta">&lt;?php</span>
+
+$array_with_string_and_int = [<span class="hljs-string">'a'</span>, <span class="hljs-number">6</span>, <span class="hljs-string">'h'</span>, <span class="hljs-number">30</span>, <span class="hljs-string">'z'</span>, <span class="hljs-string">'m'</span>, <span class="hljs-number">70</span>];
+
+$array_with_only_int = array_filter($array_with_string_and_int, fn($value) =&gt; is_int($value));
+
+print_r($array_with_only_int);
+<span class="hljs-comment">// Array ( [1] =&gt; 6 [3] =&gt; 30 [6] =&gt; 70 )</span>
+</pre><p><br></p><p>There are another feature of arrow functions other than being shorter:</p><p>Inside arrow functions, you can access variables from its outer scope. So, you don't have to manually import them by <em>use()</em></p><pre class="ql-syntax" spellcheck="false">$multiplier = <span class="hljs-number">10</span>;
+
+$array = [<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-number">4</span>, <span class="hljs-number">5</span>, <span class="hljs-number">6</span>, <span class="hljs-number">7</span>, <span class="hljs-number">8</span>, <span class="hljs-number">9</span>];
+
+$new_array = array_map(fn($number) =&gt; $number * $multiplier, $array);
+
+print_r($new_array);
+<span class="hljs-comment">// Array ( [0] =&gt; 10 [1] =&gt; 20 [2] =&gt; 30 [3] =&gt; 40 [4] =&gt; 50 [5] =&gt; 60 [6] =&gt; 70 [7] =&gt; 80 [8] =&gt; 90 )</span>
+</pre><p>Here we can access $multiplier easily inside arrow functions. When we use variables from outer scope in arrow function, PHP automatically imports them into current scope.</p><p><br></p><p><strong>Limitations</strong></p><ul><li>Arrow functions can't contain multiple expression. Only one expression can be used in function body and output of that expression is automatically returned as return value.</li></ul><pre class="ql-syntax" spellcheck="false">$array = [<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-number">4</span>, <span class="hljs-number">5</span>, <span class="hljs-number">6</span>, <span class="hljs-number">7</span>, <span class="hljs-number">8</span>, <span class="hljs-number">9</span>];
+&nbsp;
+$new_array = array_map(fn($time) =&gt; $now = time(); $time &gt; $now ? <span class="hljs-number">0</span> : <span class="hljs-number">1</span>, $array);
+<span class="hljs-comment">// This won't work. we have to keep our logic in one expression</span>
+﻿
+$new_array = array_map(fn($time) =&gt; $time &gt; time() ? <span class="hljs-number">0</span> : <span class="hljs-number">1</span>, $array);
+<span class="hljs-comment">// This will work fine, because now we are using only one expression</span>
+<span class="hljs-comment">// <span class="hljs-doctag">Note:</span> You can't use multi-line either.﻿</span>
+</pre><ul><li>Arrow functions don't support statement. So you can't use any php statement (if-else, while, switch, exception throwing..etc) inside arrow functions.</li></ul><pre class="ql-syntax" spellcheck="false">$closure = fn() =&gt; <span class="hljs-keyword">echo</span> time(); <span class="hljs-comment">// Won't work, echo is a statement</span>
+</pre><ul><li>Accessing variables by reference from outer scope is not possible. Arrow functions access variables from outer scope by pass-by-value.</li></ul><pre class="ql-syntax" spellcheck="false">$name = <span class="hljs-string">'Alice'</span>;
+&nbsp;
+$closure = fn() =&gt; $name = <span class="hljs-string">'Bob'</span>;
+&nbsp;
+$closure();
+&nbsp;
+var_dump($name);
+string(<span class="hljs-number">5</span>) <span class="hljs-string">"Alice"</span>
+
+<span class="hljs-comment">// $name didn't change to Bob because PHP imported outer variable by value</span>
+<span class="hljs-comment">// So even if we change outer variable inside arrow function, it won't change﻿﻿</span>
+</pre><p>But, we can pass parameters to arrow functions by reference if we want to change it inside function</p><pre class="ql-syntax" spellcheck="false">$name = <span class="hljs-string">'Alice'</span>;
+&nbsp;
+$closure = fn(&amp;$name) =&gt; $name = <span class="hljs-string">'Bob'</span>; <span class="hljs-comment">// &amp; means variable $name will be passed by reference</span>
+&nbsp;
+$closure($name);
+&nbsp;
+var_dump($name);
+string(<span class="hljs-number">3</span>) <span class="hljs-string">"Bob"</span> <span class="hljs-comment">// Now it has changed</span>
+</pre><p><br></p><p><br></p>                    </div>
+                </div>
+                            <div class="row">                    <div class="col-sm-6">
+                        <div class="article">
+                            <b>
+                                <a href="php-7-4-typed-properties.html">PHP 7.4 : Typed Properties</a>
+                            </b>
+                        </div>
+                    </div>
+                                        <div class="col-sm-6">
+                        <div class="article">
+                            <b>
+                                <a href="php-7-4-null-coalescing-assignment-operator.html">PHP 7.4 : Null Coalescing Assignment Operator</a>
+                            </b>
+                        </div>
+                    </div>
+                    </div>
+<style>
+.comments .comment_header {
+    display: flex;
+    justify-content: space-between;
+    border-bottom: 1px solid #eee;
+    padding: 15px 0;
+    margin-bottom: 10px;
+    align-items: center;
+}
+.comments .comment_header .total {
+    color: #777777;
+    font-size: 14px;
+}
+.comments .comment_header .write_comment_btn {
+    margin: 0;
+}
+.comments .write_comment_btn, .comments .write_comment button {
+    display: inline-block;
+    background-color: #565656;
+    color: #fff;
+    text-decoration: none;
+    margin: 10px 0 0 0;
+    padding: 5px 15px;
+    border-radius: 5px;
+    font-size: 14px;
+    font-weight: 600;
+    border: 0;
+}
+.comments .write_comment_btn:hover, .comments .write_comment button:hover {
+    background-color: #636363;
+}
+.comments .write_comment {
+    padding: 20px 0 10px 0;
+}
+.comments .write_comment textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    height: 150px;
+    margin-top: 10px;
+}
+.comments .write_comment input {
+    display: block;
+    width: 250px;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    margin-top: 10px;
+}
+.comments .write_comment button {
+    cursor: pointer;
+}
+.comments .comment {
+    padding-top: 10px;
+}
+.comments .comment .name {
+    display: inline;
+    padding: 0 5px 3px 0;
+    margin: 0;
+    font-size: 16px;
+    color: #555555;
+}
+.comments .comment .date {
+    color: #888888;
+    font-size: 14px;
+}
+.comments .comment .content {
+    padding: 5px 0 5px 0;
+}
+.comments .comment .reply_comment_btn {
+    display: inline-block;
+    text-decoration: none;
+    margin-bottom: 10px;
+    font-size: 14px;
+    color: #888888;
+}
+.comments .comment .replies {
+    padding-left: 30px;
+}
+</style>
+
+<div class="comments">
+   <hr>
+    <h2>Write comment about this article:</h2>
+
+    <div class="write_comment">
+        <form>
+            <input name="website" type="text" value="http://" style="display: none;">
+	    <input name="url" type="text" value="" style="display: none;">
+
+	    <input name="name" type="text" placeholder="Your Name" required>
+            <textarea name="content" placeholder="Write your comment here..." required></textarea>
+            <button type="submit">Submit Comment</button>
+        </form>
+    </div>
+
+</div>
+
+<script>
+
+document.querySelector("input[name='url']").value = window.location.href;
+
+const comments_page_id = 1; // This number should be unique on every page
+
+document.querySelectorAll(".comments .write_comment form").forEach(element => {
+		element.onsubmit = event => {
+			event.preventDefault();
+			fetch("../../post-comment.html", {
+				method: 'POST',
+				body: new FormData(element)
+			}).then(response => response.text()).then(data => {
+				element.parentElement.innerHTML = data;
+			});
+		};
+	});
+</script>
+
+        </div>
+    </div>
+</div>
+<footer>
+    <div class="" style="text-align: center; margin-bottom: 10px;">
+        <a href="../../rss.xml">Rss Feed</a>
+    </div>
+    <div class="copyright">
+        <a href="../../index.html">&lt;?php Backend.com</a>
+    </div>
+</footer>    </body>
+
+<!-- Mirrored from phpbackend.com/blog/post/php-7-4-arrow-functions by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 19 Jun 2025 04:35:29 GMT -->
+</html>

@@ -1,0 +1,378 @@
+<!doctype html>
+<html lang="en">
+    
+<!-- Mirrored from phpbackend.com/blog/post/php-7-4-new-custom-object-serialization-mechanism by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 19 Jun 2025 04:35:29 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
+<head>
+        <base >
+        <meta charset="UTF-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+
+        <!-- meta area -->
+                <title>PHP 7.4 : New custom object serialization mechanism :: PHP Backend Related discussions at PHPBackend.com</title>
+        <meta name="keywords" content="PHP 7.4 : New custom object serialization mechanism, php, backend, php backend, php 7, php 8, whats new in php 8, programming, web development, software, tutorial, blog" />
+        <meta name="description" content="If we want to customize php object serialization, currently we have only two option: __sleep()/__wakeup() magic methodSerializable interfaceBut, both of them has some limitations and downsides. Serializable does not work" />
+        <meta name="robots" content="index, follow" />
+                <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"> 
+
+        <link rel="dns-prefetch" href="https://cdnjs.cloudflare.com/">
+        <link rel="preload" href="../../assets/icomoon/style.css" as="style" />
+
+        <!-- stylesheet -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/css/bootstrap.min.css">
+        
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.10/styles/github.min.css" />
+
+        <link rel="stylesheet" href="../../assets/icomoon/style.css">
+
+        <style>
+            /*Default*/
+            pre {
+                display: block;
+                overflow-x: auto;
+                padding: .8em;
+                color: #333;
+                background: #f8f8f8;
+                font-size: medium;
+            }
+
+            body {
+                background-color: #fefefe;
+            }
+
+            a {
+                color: #343a40;
+            }
+
+            .article .body a {
+                text-decoration: underline;
+            }
+
+            blockquote {
+                background: #f9f9f9;
+                border-left: 10px solid #ccc;
+                margin: 1.5em 10px;
+                padding: 0.5em 10px;
+                quotes: "\201C""\201D""\2018""\2019";
+            }
+            blockquote:before {
+                color: #ccc;
+                content: open-quote;
+                font-size: 4em;
+                line-height: 0.1em;
+                margin-right: 0.25em;
+                vertical-align: -0.4em;
+            }
+            blockquote:after {
+                color: #ccc;
+                content: close-quote;
+                font-size: 4em;
+                line-height: 0.1em;
+                margin-left: 0.25em;
+                vertical-align: -0.4em;
+            }
+            blockquote p {
+                display: inline;
+            }
+
+            .article {
+                margin:15px;
+                padding: 15px;
+                /*border: 1px solid #b0b0b0;*/
+                background-color: white;
+                font-size: 1.3em;
+            }
+
+            .article .title {
+                color: #343a40;
+                font-size: 1.5em;
+                font-weight: bold;
+                margin-bottom: 0.5em;
+            }
+
+            .article .title a {
+                color: #343a40;
+            }
+            .article .meta {
+                font-size: 0.7em;
+                margin-bottom: 0.3em;
+            }
+
+            .article .slurp {
+                font-size: 0.8em;
+                font-weight: normal;
+                color: #6B6B6B;
+            }
+            .article .body {
+                margin-top: 1.2em;
+            }
+            .article .body p {
+                margin-bottom: 0.7em;
+            }
+
+            footer {
+                color: white;
+                background-color: #343a40;
+                padding: 1em;
+            }
+
+            footer a, footer a:hover {
+                color: #ffffff;
+            }
+
+            .copyright {
+                text-align: center;
+            }
+
+            @media (max-width: 800px) {
+                .article {
+                    margin-left: -10px;
+                    margin-right: -10px;
+                    margin-top: 5px;
+                    margin-bottom: 5px;
+                    font-size: 1em;
+                }
+
+                .article .title {
+                    font-size: 1.3em;
+                }
+            }
+        </style>
+
+                <meta property="og:title" content="PHP 7.4 : New custom object serialization mechanism :: PHP Backend Related discussions at PHPBackend.com" />
+        <meta property="og:site_name" content="PHPBackend.com" />
+        <meta property="og:description" content="Welcome to world of PHP, the most laughed at language on the internet. Here at PHPBackend, we discuss about new php versions, tips & tricks, tutorials and rants." />
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content="https://phpbackend.com/blog/post/php-7-4-new-custom-object-serialization-mechanism" />
+        <meta property="og:image" content="https://phpbackend.com/images/phpbackend-og.jpg" />
+        <meta property="og:image:width" content="600" />
+        <meta property="og:image:height" content="450" />
+            </head><body>
+    <div class="bg-dark" id="navbarHeader">
+        <div class="container">
+            <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+                <a class="navbar-brand" href="../../index.html">&lt;?php Backend.com</a>
+<!--                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNavDropdown">
+                    <ul class="navbar-nav ml-auto">
+                    </ul>
+                </div>-->
+            </nav>
+        </div>
+    </div><div class="container">
+    <div class="row">
+        <div class="col-sm-10">
+                            <div class="article">
+                    <div class="title">
+                        PHP 7.4 : New custom object serialization mechanism                    </div>
+                    <div class="meta">
+                        <i class="icon-calendar"></i> 03, November 2021                    </div>
+                    <hr>
+                    <div class="body">
+                        <p>If we want to customize php object serialization, currently we have only two option:</p><ul><li>__sleep()/__wakeup() magic method</li><li>Serializable interface</li></ul><p>But, both of them has some limitations and downsides. Serializable does not work reliably when used in nested serialize() calls. This situation can happen when we attempt to compose serialization through the use of parent::serialize().</p><p>Another issue is, to ensure unserialize() happens in correct context, it needs to be performed immediately. But this can lead to unsafe usage of object in unserialize(), as the object may not be fully initiated yet.</p><p>Also, as serialize() can return data in arbitrary format, making analyzing that data much harder than needed.</p><p><br></p><p>__sleep/__wakeup also have downside if serialized object needs to be significantly different than the object stat in memory.</p><p><br></p><p>To solve these issues, PHP 7.4 has introduced two new magic method to customize serialization.</p><pre class="ql-syntax" spellcheck="false"><span class="hljs-comment">// Returns array containing all the necessary state of the object.</span>
+<span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">__serialize</span><span class="hljs-params">()</span>: <span class="hljs-title">array</span></span>;
+
+<span class="hljs-comment">// Restores the object state from the given data array.</span>
+<span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">__unserialize</span><span class="hljs-params">(array $data)</span>: <span class="hljs-title">void</span></span>;
+</pre><p><br></p><p>With these new methods, we do not need to concern ourselves with serialize()/unserialize() calls anymore.</p><p>In __serialize() we simply need to return an array of datas that we need to serialize.</p><p>On the other side, __unserialize() just takes an array and we can populate our object with that data.</p><p><br></p><p>Here is a simple example:</p><pre class="ql-syntax" spellcheck="false"><span class="hljs-meta">&lt;?php</span>
+
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Student</span>
+</span>{
+&nbsp;&nbsp;&nbsp; <span class="hljs-keyword">public</span> string $name;
+&nbsp;&nbsp;&nbsp; <span class="hljs-keyword">public</span> int $class;
+&nbsp;&nbsp;&nbsp; <span class="hljs-keyword">public</span> int $roll;
+&nbsp;&nbsp;&nbsp; <span class="hljs-keyword">private</span> float $gpa;
+&nbsp;&nbsp; &nbsp;
+&nbsp;&nbsp;&nbsp; <span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">__construct</span><span class="hljs-params">(string $name, int $class, int $roll, float $gpa)</span>
+&nbsp;&nbsp;&nbsp; </span>{
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span class="hljs-keyword">$this</span>-&gt;name = $name;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span class="hljs-keyword">$this</span>-&gt;class = $class;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span class="hljs-keyword">$this</span>-&gt;roll = $roll;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span class="hljs-keyword">$this</span>-&gt;gpa = $gpa;
+&nbsp;&nbsp;&nbsp; }
+&nbsp;&nbsp; &nbsp;
+&nbsp;&nbsp;&nbsp; <span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">__serialize</span><span class="hljs-params">()</span>: <span class="hljs-title">array</span>
+&nbsp;&nbsp;&nbsp; </span>{
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span class="hljs-keyword">return</span> [
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span class="hljs-string">'name'</span> =&gt; <span class="hljs-keyword">$this</span>-&gt;name,
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span class="hljs-string">'class'</span> =&gt; <span class="hljs-keyword">$this</span>-&gt;class,
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span class="hljs-string">'roll'</span> =&gt; <span class="hljs-keyword">$this</span>-&gt;roll,
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span class="hljs-string">'gpa'</span> =&gt; <span class="hljs-keyword">$this</span>-&gt;gpa,
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ];
+&nbsp;&nbsp;&nbsp; }
+&nbsp;&nbsp; &nbsp;
+&nbsp;&nbsp;&nbsp; <span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">__unserialize</span><span class="hljs-params">(array $data)</span>: <span class="hljs-title">void</span>
+&nbsp;&nbsp;&nbsp; </span>{
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span class="hljs-keyword">$this</span>-&gt;name = $data[<span class="hljs-string">'name'</span>];
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span class="hljs-keyword">$this</span>-&gt;class = $data[<span class="hljs-string">'class'</span>];
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span class="hljs-keyword">$this</span>-&gt;roll = $data[<span class="hljs-string">'roll'</span>];
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span class="hljs-keyword">$this</span>-&gt;gpa = $data[<span class="hljs-string">'gpa'</span>];
+&nbsp;&nbsp;&nbsp; }
+}
+
+$serialized = serialize(<span class="hljs-keyword">new</span> Student(<span class="hljs-string">'Bob'</span>, <span class="hljs-number">10</span>, <span class="hljs-number">3</span>, <span class="hljs-number">4.00</span>));
+
+<span class="hljs-keyword">echo</span> $serialized;
+<span class="hljs-comment">// O:7:"Student":4:{s:4:"name";s:3:"Bob";s:5:"class";i:10;s:4:"roll";i:3;s:3:"gpa";d:4;}</span>
+
+$unserialized = unserialize($serialized);
+
+print_r($unserialized);
+<span class="hljs-comment">// Student Object (</span>
+<span class="hljs-comment">//&nbsp;&nbsp;&nbsp; [name] =&gt; Bob</span>
+<span class="hljs-comment">//&nbsp;&nbsp;&nbsp; [class] =&gt; 10</span>
+<span class="hljs-comment">//&nbsp;&nbsp;&nbsp; [roll] =&gt; 3</span>
+<span class="hljs-comment">//&nbsp;&nbsp;&nbsp; [gpa:Student:private] =&gt; 4</span>
+<span class="hljs-comment">//)</span>
+</pre><p><br></p><p>RFC: <a href="https://wiki.php.net/rfc/custom_object_serialization" target="_blank">https://wiki.php.net/rfc/custom_object_serialization</a></p>                    </div>
+                </div>
+                            <div class="row">                    <div class="col-sm-6">
+                        <div class="article">
+                            <b>
+                                <a href="php-8-1-bind-parameters-with-execute-method-in-mysqli.html">PHP 8.1 : Bind parameters with execute() method in mysqli</a>
+                            </b>
+                        </div>
+                    </div>
+                                        <div class="col-sm-6">
+                        <div class="article">
+                            <b>
+                                <a href="php-8-1-phasing-out-serializable-interface.html">PHP 8.1 : Phasing out Serializable Interface</a>
+                            </b>
+                        </div>
+                    </div>
+                    </div>
+<style>
+.comments .comment_header {
+    display: flex;
+    justify-content: space-between;
+    border-bottom: 1px solid #eee;
+    padding: 15px 0;
+    margin-bottom: 10px;
+    align-items: center;
+}
+.comments .comment_header .total {
+    color: #777777;
+    font-size: 14px;
+}
+.comments .comment_header .write_comment_btn {
+    margin: 0;
+}
+.comments .write_comment_btn, .comments .write_comment button {
+    display: inline-block;
+    background-color: #565656;
+    color: #fff;
+    text-decoration: none;
+    margin: 10px 0 0 0;
+    padding: 5px 15px;
+    border-radius: 5px;
+    font-size: 14px;
+    font-weight: 600;
+    border: 0;
+}
+.comments .write_comment_btn:hover, .comments .write_comment button:hover {
+    background-color: #636363;
+}
+.comments .write_comment {
+    padding: 20px 0 10px 0;
+}
+.comments .write_comment textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    height: 150px;
+    margin-top: 10px;
+}
+.comments .write_comment input {
+    display: block;
+    width: 250px;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    margin-top: 10px;
+}
+.comments .write_comment button {
+    cursor: pointer;
+}
+.comments .comment {
+    padding-top: 10px;
+}
+.comments .comment .name {
+    display: inline;
+    padding: 0 5px 3px 0;
+    margin: 0;
+    font-size: 16px;
+    color: #555555;
+}
+.comments .comment .date {
+    color: #888888;
+    font-size: 14px;
+}
+.comments .comment .content {
+    padding: 5px 0 5px 0;
+}
+.comments .comment .reply_comment_btn {
+    display: inline-block;
+    text-decoration: none;
+    margin-bottom: 10px;
+    font-size: 14px;
+    color: #888888;
+}
+.comments .comment .replies {
+    padding-left: 30px;
+}
+</style>
+
+<div class="comments">
+   <hr>
+    <h2>Write comment about this article:</h2>
+
+    <div class="write_comment">
+        <form>
+            <input name="website" type="text" value="http://" style="display: none;">
+	    <input name="url" type="text" value="" style="display: none;">
+
+	    <input name="name" type="text" placeholder="Your Name" required>
+            <textarea name="content" placeholder="Write your comment here..." required></textarea>
+            <button type="submit">Submit Comment</button>
+        </form>
+    </div>
+
+</div>
+
+<script>
+
+document.querySelector("input[name='url']").value = window.location.href;
+
+const comments_page_id = 1; // This number should be unique on every page
+
+document.querySelectorAll(".comments .write_comment form").forEach(element => {
+		element.onsubmit = event => {
+			event.preventDefault();
+			fetch("../../post-comment.html", {
+				method: 'POST',
+				body: new FormData(element)
+			}).then(response => response.text()).then(data => {
+				element.parentElement.innerHTML = data;
+			});
+		};
+	});
+</script>
+
+        </div>
+    </div>
+</div>
+<footer>
+    <div class="" style="text-align: center; margin-bottom: 10px;">
+        <a href="../../rss.xml">Rss Feed</a>
+    </div>
+    <div class="copyright">
+        <a href="../../index.html">&lt;?php Backend.com</a>
+    </div>
+</footer>    </body>
+
+<!-- Mirrored from phpbackend.com/blog/post/php-7-4-new-custom-object-serialization-mechanism by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 19 Jun 2025 04:35:29 GMT -->
+</html>
