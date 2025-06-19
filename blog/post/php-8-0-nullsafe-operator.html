@@ -248,123 +248,24 @@ $a = $b?-&gt;c;
                         </div>
                     </div>
                     </div>
-<style>
-.comments .comment_header {
-    display: flex;
-    justify-content: space-between;
-    border-bottom: 1px solid #eee;
-    padding: 15px 0;
-    margin-bottom: 10px;
-    align-items: center;
-}
-.comments .comment_header .total {
-    color: #777777;
-    font-size: 14px;
-}
-.comments .comment_header .write_comment_btn {
-    margin: 0;
-}
-.comments .write_comment_btn, .comments .write_comment button {
-    display: inline-block;
-    background-color: #565656;
-    color: #fff;
-    text-decoration: none;
-    margin: 10px 0 0 0;
-    padding: 5px 15px;
-    border-radius: 5px;
-    font-size: 14px;
-    font-weight: 600;
-    border: 0;
-}
-.comments .write_comment_btn:hover, .comments .write_comment button:hover {
-    background-color: #636363;
-}
-.comments .write_comment {
-    padding: 20px 0 10px 0;
-}
-.comments .write_comment textarea {
-    width: 100%;
-    padding: 10px;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-    height: 150px;
-    margin-top: 10px;
-}
-.comments .write_comment input {
-    display: block;
-    width: 250px;
-    padding: 10px;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-    margin-top: 10px;
-}
-.comments .write_comment button {
-    cursor: pointer;
-}
-.comments .comment {
-    padding-top: 10px;
-}
-.comments .comment .name {
-    display: inline;
-    padding: 0 5px 3px 0;
-    margin: 0;
-    font-size: 16px;
-    color: #555555;
-}
-.comments .comment .date {
-    color: #888888;
-    font-size: 14px;
-}
-.comments .comment .content {
-    padding: 5px 0 5px 0;
-}
-.comments .comment .reply_comment_btn {
-    display: inline-block;
-    text-decoration: none;
-    margin-bottom: 10px;
-    font-size: 14px;
-    color: #888888;
-}
-.comments .comment .replies {
-    padding-left: 30px;
-}
-</style>
 
 <div class="comments">
    <hr>
     <h2>Write comment about this article:</h2>
 
     <div class="write_comment">
-        <form>
-            <input name="website" type="text" value="http://" style="display: none;">
-	    <input name="url" type="text" value="" style="display: none;">
+	<div id="cusdis_thread"
+	  data-host="https://cusdis.com"
+	  data-app-id="3802f670-f44c-4394-be44-0eeed8a33800"
+	  data-page-id="{{ PAGE_ID }}"
+	  data-page-url="{{ PAGE_URL }}"
+	  data-page-title="{{ PAGE_TITLE }}"
+	></div>
+	<script async defer src="https://cusdis.com/js/cusdis.es.js"></script>
 
-	    <input name="name" type="text" placeholder="Your Name" required>
-            <textarea name="content" placeholder="Write your comment here..." required></textarea>
-            <button type="submit">Submit Comment</button>
-        </form>
     </div>
 
 </div>
-
-<script>
-
-document.querySelector("input[name='url']").value = window.location.href;
-
-const comments_page_id = 1; // This number should be unique on every page
-
-document.querySelectorAll(".comments .write_comment form").forEach(element => {
-		element.onsubmit = event => {
-			event.preventDefault();
-			fetch("../../post-comment.html", {
-				method: 'POST',
-				body: new FormData(element)
-			}).then(response => response.text()).then(data => {
-				element.parentElement.innerHTML = data;
-			});
-		};
-	});
-</script>
 
         </div>
     </div>
